@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using FirePuckStore.Controllers.Services.Implementation;
-using FirePuckStore.Controllers.Services.Interfaces;
+using FirePuckStore.BL.Services.Implementation;
+using FirePuckStore.BL.Services.Interfaces;
 
 namespace FirePuckStore.Controllers
 {
