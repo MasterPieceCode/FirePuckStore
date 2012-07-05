@@ -1,0 +1,52 @@
+﻿@model IDictionary<string, List<FirePuckStore.Models.Card>>
+@{
+    ViewBag.Title = "Store";
+}
+@*<aside id="shoppingCart">
+    <div id="cartBlock">
+        <p id = "cartQuantity">2</p>
+        <img id="cartIco" src="/Content/Images/Cart.png"/>
+        <br>
+    </div>
+    <section class="CartItem">
+        <img class = "cartImg" src="/Content/Images/malkin1.jpg"/>
+        <br>
+        <h6>Qnty:</h6><span> 2</span>
+        <br>
+        <h6>Price:</h6><span> 35$</span>
+    </section>
+    <section class="CartItem">
+        <img class = "cartImg" src="/Content/Images/Morozov1.jpg"/>
+        <br>
+        <h6>Qnty:</h6><span> 1</span>
+        <br>
+        <h6>Price:</h6><span> 25$</span>
+    </section>
+</aside>*@
+
+@{
+    Html.RenderAction("Details", "Cart");
+}
+
+<div id="categorySection" class="ui-accordion ui-widget ui-helper-reset">
+    @{
+        foreach (var category in Model)
+        {
+            <h3><a href="#">@category.Key</a></h3>
+            <div>
+                @foreach (var card in category.Value)
+                {
+                    <img src="@card.ImageUrl" alt="@card.Description"/>
+                }
+            </div>
+        }
+    }
+</div>
+
+@section scripts
+{<script type="text/javascript">
+     $(document).ready(function () {
+         $("#categorySection").accordion({ active: false });
+     });
+</script>
+}

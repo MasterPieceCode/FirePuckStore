@@ -1,0 +1,229 @@
+﻿header, footer, nav, section {
+    display: block;
+}
+
+
+/* Styles for basic forms
+-----------------------------------------------------------*/
+fieldset {
+    border: 1px solid #ddd;
+    padding: 0 1.4em 1.4em 1.4em;
+    margin: 0 0 1.5em 0;
+}
+
+legend {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+textarea {
+    min-height: 75px;
+}
+
+.editor-label {
+    margin: 1em 0 0 0;
+}
+
+.editor-field {
+    margin: 0.5em 0 0 0;
+}
+
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error {
+    color: #f00;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #f00;
+    background-color: #fee;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: #f00;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+
+        html{
+            height: 100%;
+        }
+        body
+        {
+            background-color: black;
+            color: silver;
+            font-family: Cagliostro, sans-serif;
+            height: 100%;
+        }
+        
+        header nav{
+            width: 60%;
+        }
+        a{
+            text-decoration: none; color: silver;
+        }
+        nav a{
+            -webkit-transition: 500ms linear 100ms;
+            -moz-transition: 500ms linear 100ms;
+            -o-transition: 500ms linear 100ms;
+            
+        } #navList a:hover{
+            border: none;
+            border-radius: 5px;            
+            background-color: rgb(73, 56, 62);
+            box-shadow: 5px 5px 5px #888;
+            opacity: 1;
+            color: white; text-decoration: none; cursor: pointer;
+            padding: 5px;
+            -webkit-transition: 200ms linear 100ms;
+            -moz-transition: 200ms linear 100ms;
+            -o-transition: 200ms linear 100ms;
+        }
+        #homeImg
+        {
+            margin: 0px;
+            display: inline-block;
+            color: #fb7a55;
+            background: left no-repeat url(images/puck.jpg);
+            background-size: contain;
+            height: 150px;
+            width: 20%;
+            position: absolute;
+            left: 0px;
+            z-index: -1;
+        }
+        h1{
+            color: #fb7a55;
+            text-shadow: 5px 5px 10px #0080c0;
+            float: left;
+            font-style: oblique;
+            font-size: large;
+            margin-top: 0px;
+        }
+        header ul{
+            margin-top: 0px;
+            list-style: none;
+            font-size: x-large;
+            display: inline-block;
+            margin-left: 25%;
+            position: relative;
+            top: 20px;
+            background-color: #000000;
+            border-style: outset;
+            padding: 2%;
+            border-radius: 10px 10px 10px 10px;
+        }
+        li {
+            display: inline;
+            padding-left: 30px;
+            
+        }
+        #categorySection{
+            float: left;
+            margin-top: 5%;
+            width: 60%;
+            
+        }                
+        #categoryList > li
+        {
+            display: block;
+            padding: 10px;
+            font-size: large;
+            background-color: black;
+        }
+        #categoryList > li  img
+        {
+            height: 150px;
+            display: inline-block;
+            opacity: 0.8;
+            padding: 0px 0px;            
+        }
+                        
+        #categorySection  img
+        {
+            height: 150px;
+            display: inline-block;
+            opacity: 0.8;
+            padding: 0px 0px;            
+        }
+        
+        #categorySection img:hover
+        {
+            opacity: 1;
+        }
+        
+        #categoryList > li img:first-of-type
+        {
+            margin-left: 50px;
+        }
+        
+        #categoryList > li img:hover
+        {
+            opacity: 1;
+        }
+
+        #shoppingCart{
+            /*text-align: center;*/
+            /*float:right;*/
+            background-color:#585858;
+            
+            width:25%;
+            padding:0px 8% 0px 1%;   
+            min-height: 100%;
+            max-height: 3000px;
+            vertical-align: bottom;
+            position: fixed;
+            margin-left: 64%;
+        }
+        
+        #cartIco{
+            cursor: pointer;
+            background-color: #585858;
+            opacity: .5;
+            display: inline-block;
+        }
+
+        #cartIco:hover{
+            cursor: pointer;
+            background-color: #585858;
+            opacity: 1;
+        }
+        #cartQuantity{
+        display: inline-block;
+        left: 70px;
+        position: relative;
+        background-color: #00ae00;
+        padding: 3px 5px 3px 5px;
+        border-radius: 10px;
+        z-index: 1;
+        opacity: .5;
+        font-size: small;
+        color: white;
+        }
+        
+        .cartImg
+        {
+            height: 100px;
+            display: inline-block;
+            padding: 0px 0px;
+        }
+        #cartBlock{
+            text-align: center;
+        }
+        h6{
+            display: inline-block;
+            margin: 0px;
+        }
+        .CartItem{
+            display: inline-block;
+            text-align: center;
+        }

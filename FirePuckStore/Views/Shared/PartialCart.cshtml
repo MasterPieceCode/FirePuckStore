@@ -1,0 +1,20 @@
+﻿@model List<FirePuckStore.Models.Order>
+
+<aside id="shoppingCart">
+    <div id="cartBlock">
+        <p id = "cartQuantity">@Model.Count</p>
+        <img id="cartIco" src="/Content/Images/Cart.png"/>
+        <br/>
+    </div>
+
+@foreach(var order in Model)
+{
+    <div class="CartItem">
+        <img class = "cartImg" src="@order.Card.ImageUrl"/>
+        <br/>
+        <h6>Qnty:</h6><span> @order.Quantity</span>
+        <br/>
+        <h6>Price:</h6><span> @order.Card.Price</span>
+    </div>
+}
+</aside>
