@@ -106,8 +106,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CartControllerUnitTest.cs" />
+    <Compile Include="Controllers\HomeControllerUnitTest.cs" />
+    <Compile Include="Helpers\AssertExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestRoutes.cs" />
+    <Compile Include="Helpers\TestHelper.cs" />
+    <Compile Include="Routes\TestRoutes.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
@@ -116,6 +120,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FirePuckStore.BL\FirePuckStore.BL.csproj">
+      <Project>{788628EE-C628-4297-A79F-7B8285BD2C61}</Project>
+      <Name>FirePuckStore.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FirePuckStore.Entities\FirePuckStore.Models.csproj">
+      <Project>{9A665A2B-FED3-4DAD-BC2C-028561AF4D7A}</Project>
+      <Name>FirePuckStore.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FirePuckStore\FirePuckStore.csproj">
       <Project>{A1C1E1CB-237C-4B45-9414-25272ACB47B2}</Project>
       <Name>FirePuckStore</Name>

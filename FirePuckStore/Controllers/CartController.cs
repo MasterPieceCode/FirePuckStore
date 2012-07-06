@@ -12,13 +12,14 @@ namespace FirePuckStore.Controllers
     {
         private readonly ICartService _cartService;
 
-        public CartController():this(new CartService())
-        {            
-        }
-
         public CartController(ICartService cartService)
         {
             _cartService = cartService;
+        }
+
+        public ActionResult Index()
+        {
+            return new EmptyResult();
         }
         //
         // GET: /Cart/

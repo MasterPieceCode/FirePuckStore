@@ -2,23 +2,24 @@
 using System.Linq;
 using FirePuckStore.BL.Services.Interfaces;
 using FirePuckStore.DAL;
+using FirePuckStore.DAL.Repositories.Interfaces;
 using FirePuckStore.Models;
 
 namespace FirePuckStore.BL.Services.Implementation
 {
     public class CardService : ICardService
     {
+        private readonly ICardRepository _cardRepository;
         private const int MixedCardsCount = 5;
-        private readonly PuckStoreDbContext _dbContext;
 
-        public CardService()
+        public CardService(ICardRepository cardRepository)
         {
-            _dbContext = new PuckStoreDbContext();
+            _cardRepository = cardRepository;
         }
 
         public IDictionary<string, List<Card>> GetOrderedByLeagueWithMixedCards()
         {
-            var cards =_dbContext.Cards.ToList();
+            var cards = _cardRepository.GetCards().ToList();
 
             var result = new Dictionary<string, List<Card>>{{"Mixed", new List<Card>()}};
 

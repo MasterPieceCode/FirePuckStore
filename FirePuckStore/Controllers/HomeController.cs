@@ -12,11 +12,6 @@ namespace FirePuckStore.Controllers
     {
         private readonly ICardService _cardService;
 
-        public HomeController() : this(new CardService())
-        {
-            
-        }
-
         public HomeController(ICardService cardService)
         {
             _cardService = cardService;
@@ -29,6 +24,5 @@ namespace FirePuckStore.Controllers
         {
             return View(_cardService.GetOrderedByLeagueWithMixedCards());
         }
-
     }
 }

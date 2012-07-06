@@ -46,6 +46,11 @@
     <Compile Include="DataConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PuckStoreDbContext.cs" />
+    <Compile Include="Repositories\Implementation\AbstractRepository.cs" />
+    <Compile Include="Repositories\Implementation\CardRepository.cs" />
+    <Compile Include="Repositories\Implementation\CartRepository.cs" />
+    <Compile Include="Repositories\Interfaces\ICardRepository.cs" />
+    <Compile Include="Repositories\Interfaces\ICartRepository.cs" />
     <Compile Include="SampleDataInitializer.cs" />
   </ItemGroup>
   <ItemGroup>

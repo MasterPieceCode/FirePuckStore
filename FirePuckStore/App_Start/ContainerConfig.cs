@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using FirePuckStore.BL.Services.Implementation;
 using FirePuckStore.BL.Services.Interfaces;
 using FirePuckStore.Controllers;
+using FirePuckStore.DAL.Repositories.Implementation;
+using FirePuckStore.DAL.Repositories.Interfaces;
 using Microsoft.Practices.Unity;
 
 namespace FirePuckStore.App_Start
@@ -16,10 +18,16 @@ namespace FirePuckStore.App_Start
         {
             var unityContainer = new UnityContainer();
 
-            unityContainer.RegisterType(typeof(ICardService), typeof(CardService), new ContainerControlledLifetimeManager());
-            /*unityContainer.RegisterType(typeof(ICartService), typeof(CartService), new ContainerControlledLifetimeManager());*/
+            unityContainer.RegisterType<HomeController>();
+            unityContainer.RegisterType<CartController>();
 
-             ControllerBuilder.Current.SetControllerFactory(new InjectControllerFactory(unityContainer));
+            unityContainer.RegisterType(typeof (ICardService), typeof (CardService), new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType(typeof(ICardRepository), typeof(CardRepository), new ContainerControlledLifetimeManager());
+
+            unityContainer.RegisterType(typeof (ICartService), typeof (CartService), new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType(typeof (ICartRepository), typeof (CartRepository), new ContainerControlledLifetimeManager());
+
+            ControllerBuilder.Current.SetControllerFactory(new InjectControllerFactory(unityContainer));
         }
     }
 }

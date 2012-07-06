@@ -16,10 +16,14 @@ namespace FirePuckStore.Controllers
             _container = container;
         }
 
-        protected override IController GetControllerInstance(System.Web.Routing.RequestContext requestContext,
-                                                             Type controllerType)
+        protected override IController GetControllerInstance(System.Web.Routing.RequestContext requestContext, Type controllerType)
         {
-            return  _container.BuildUp(base.GetControllerInstance(requestContext, controllerType));
+            if (controllerType == null)
+            {
+                return null;
+            }
+
+            return (IController) _container.Resolve(controllerType);
         }
     }
 }

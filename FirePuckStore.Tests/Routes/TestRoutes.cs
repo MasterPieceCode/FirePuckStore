@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
-using System.Web.Routing;
+﻿using System.Web.Routing;
 using FirePuckStore.Controllers;
-using Moq;
 using Xunit;
 using MvcContrib.TestHelper;
 
-namespace FirePuckStore.Tests
+namespace FirePuckStore.Tests.Routes
 {
     public class TestRoutes
     {
