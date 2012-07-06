@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace FirePuckStore.Models
 {
@@ -6,6 +7,7 @@ namespace FirePuckStore.Models
     {
         public int CardId { get; set; }
 
+        [Display(Name = "Category")]
         public string Category { get; set; }
 
         public string Description { get; set; }
@@ -16,6 +18,7 @@ namespace FirePuckStore.Models
 
         public int Quantity { get; set; }
 
+        [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
         public virtual Player Player { get; set; }

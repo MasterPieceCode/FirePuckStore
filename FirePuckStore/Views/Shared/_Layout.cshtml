@@ -26,10 +26,10 @@
             <h1>Fire Puck Cards</h1>
             <ul id="navList">
                 <li>
-                    <a id="shopAnchor" href='Store'>Store</a>
+                    @Html.ActionLink("Store", "Index", "Home")
                 </li>
                 <li>
-                    <a href='Design'>Cards</a>
+                    @Html.ActionLink("Cards", "Index", "Card")
                 </li>
                 <li>
                     <a href='Players'>Players</a>
@@ -44,6 +44,6 @@
         @*  @Scripts.Render("~/bundles/jquery")*@
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/jqueryui")
-        @RenderSection("scripts", required: false)
+        @RenderSection("Scripts", required: false)
     </body>
 </html>

@@ -156,6 +156,13 @@ textarea {
             padding: 0px 0px;            
         }
         
+        .cardImg {
+            height: 150px;
+            display: inline-block;
+            opacity: 1;
+            padding: 0px 0px;            
+        }
+        
         #categorySection img:hover
         {
             opacity: 1;
