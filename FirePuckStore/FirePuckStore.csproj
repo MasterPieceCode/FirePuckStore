@@ -286,9 +286,6 @@
     <Content Include="Views\Card\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Card\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Card\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>

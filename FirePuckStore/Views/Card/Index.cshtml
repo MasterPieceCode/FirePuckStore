@@ -2,10 +2,9 @@
 @{
     ViewBag.Title = "Index";
 }
-@*<h2>Cards List</h2>*@
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<header>
+    <p class="inlineDisplay">Here you can see all the cards and enjoy sharing you own cards with others! Just click</p><span> @Html.ActionLink("here", "Create", new object(), new { id = "inlineDisplay" })</span> <p class="inlineDisplay">and upload your own card!</p>
+</header>
 
 @foreach (var item in Model)
 {
@@ -45,9 +44,9 @@
                 </p>
             </div>
         </div>
-    <div class ="cardAction">
-          @Html.ActionLink("Edit", "Edit", new { id = item.CardId }) |
-          @Html.ActionLink("Delete", "Delete", new { id = item.CardId })
-          </div>
+        <div class="cardAction">
+            @Html.ActionLink("Edit", "Edit", new { id = item.CardId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.CardId })
+        </div>
     </div>
 }

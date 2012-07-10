@@ -63,11 +63,15 @@ textarea {
             color: silver;
             font-family: Cagliostro, sans-serif;
             height: 100%;
+            width: 100%;
+            display: block;
         }
         
         header nav{
             width: 70%;
             margin-bottom: 50px;
+            display: block;
+            max-width: 1900px;
         }
         a{
             text-decoration: none; color: silver;
@@ -266,4 +270,13 @@ textarea {
     
     a {
         font-weight: bold;
+    }
+    
+    .inlineDisplay {
+        display: inline;
+    }
+    
+    header {
+        margin-bottom: 20px;
+        display: block;
     }

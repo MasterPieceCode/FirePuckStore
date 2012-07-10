@@ -23,20 +23,6 @@ namespace FirePuckStore.Controllers
             return View(cards.ToList());
         }
 
-        //
-        // GET: /Card/Details/5
-
-        public ActionResult Details(int id = 0)
-        {
-            Card card = db.Cards.Find(id);
-            if (card == null)
-            {
-                return HttpNotFound();
-            }
-            return View(card);
-        }
-
-        //
         // GET: /Card/Create
 
         public ActionResult Create()
