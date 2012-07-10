@@ -66,7 +66,8 @@ textarea {
         }
         
         header nav{
-            width: 60%;
+            width: 70%;
+            margin-bottom: 50px;
         }
         a{
             text-decoration: none; color: silver;
@@ -76,7 +77,7 @@ textarea {
             -moz-transition: 500ms linear 100ms;
             -o-transition: 500ms linear 100ms;
             
-        } #navList a:hover{
+        } a:hover{
             border: none;
             border-radius: 5px;            
             background-color: rgb(73, 56, 62);
@@ -156,13 +157,7 @@ textarea {
             padding: 0px 0px;            
         }
         
-        .cardImg {
-            height: 150px;
-            display: inline-block;
-            opacity: 1;
-            padding: 0px 0px;            
-        }
-        
+       
         #categorySection img:hover
         {
             opacity: 1;
@@ -179,8 +174,6 @@ textarea {
         }
 
         #shoppingCart{
-            /*text-align: center;*/
-            /*float:right;*/
             background-color:#585858;
             
             width:25%;
@@ -230,7 +223,47 @@ textarea {
             display: inline-block;
             margin: 0px;
         }
-        .CartItem{
+        .cartItem{
             display: inline-block;
             text-align: center;
         }
+        
+        .table {
+            display: inline-table;
+            padding-left: 5%;
+        }
+        
+        .row {
+            display: table-row;
+        }
+    
+        div.table p {
+            display: table-cell;
+            padding-left: 10px;
+        }
+
+        .cardImg {
+            height: 150px;
+            padding: 0px 0px;
+            float: left;
+        }
+        
+        #viewCard {
+            display: inline-block;
+            width: 40%;
+            border-color: gainsboro;
+            border-radius: 10px 10px 10px 10px;
+            border-style: solid;
+            padding: 15px;
+            margin: 5px;
+        }
+    
+    .cardAction 
+    {
+        float: right;
+        margin-top: 25%;
+    }
+    
+    a {
+        font-weight: bold;
+    }
