@@ -6,5 +6,6 @@ namespace FirePuckStore.BL.Services.Interfaces
     public interface ICardService
     {
         IDictionary<string, List<Card>> GetOrderedByLeagueWithMixedCards();
+        List<Card> GetAllCards();
     }
 }

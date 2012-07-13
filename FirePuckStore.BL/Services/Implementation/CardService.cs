@@ -33,6 +33,11 @@ namespace FirePuckStore.BL.Services.Implementation
             return result;
         }
 
+        public List<Card> GetAllCards()
+        {
+            return _cardRepository.GetCardsWithPlayerInfo();
+        }
+
         private Card ConverToMixedLeagueCard(Card card)
         {
             var result = new Card

@@ -9,5 +9,6 @@ namespace FirePuckStore.DAL.Repositories.Interfaces
     public interface ICardRepository
     {
         List<Card> GetCards();
+        List<Card> GetCardsWithPlayerInfo();
     }
 }

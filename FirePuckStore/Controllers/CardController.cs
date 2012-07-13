@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using FirePuckStore.BL.Services.Interfaces;
 using FirePuckStore.Models;
 using FirePuckStore.DAL;
 
@@ -12,15 +13,20 @@ namespace FirePuckStore.Controllers
 {
     public class CardController : Controller
     {
+        private readonly ICardService _cardService;
         private PuckStoreDbContext db = new PuckStoreDbContext();
+
+        public CardController(ICardService cardService)
+        {
+            _cardService = cardService;
+        }
 
         //
         // GET: /Card/
 
         public ActionResult Index()
         {
-            var cards = db.Cards.Include(c => c.Player);
-            return View(cards.ToList());
+            return View(_cardService.GetAllCards());
         }
 
         // GET: /Card/Create

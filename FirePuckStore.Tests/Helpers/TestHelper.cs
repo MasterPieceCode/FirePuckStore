@@ -8,15 +8,48 @@ namespace FirePuckStore.Tests
 {
     public class TestHelper
     {
+        private const string RandomStringLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        private static readonly Random _random = new Random();
+
+        public static string CreateRandomString(int length)
+        {
+            var sb = new StringBuilder(length);
+            for (var i = 0; i < length; i++)
+            {
+                sb.Append(RandomStringLetters[_random.Next(RandomStringLetters.Length)]);
+            }
+            return sb.ToString();
+        }
+
+        public static int CreateRandomNumber(int minValue, int maxValue)
+        {
+            return _random.Next(minValue, maxValue);
+        }
+
         public static Dictionary<string, List<Card>> GetRandomDictionaryCardData()
         {
-            var result = new Dictionary<string, List<Card>>{{"Category1", new List<Card>()}, {"Category2", new List<Card>()}};
+            var result = new Dictionary<string, List<Card>>
+                             {{"Category1", new List<Card>()}, {"Category2", new List<Card>()}};
             return result;
         }
 
         public static List<Order> GetRandomOrders()
         {
             return new List<Order>() {new Order(), new Order()};
+        }
+
+        public static List<Card> CreateRandomCards()
+        {
+            return new List<Card>
+                       {
+                           CreateRandomCardWithId(1),
+                           CreateRandomCardWithId(2),
+                       };
+        }
+
+        public static Card CreateRandomCardWithId(int cardId)
+        {
+            return new Card {CardId = cardId, Category = CreateRandomString(10)};
         }
     }
 }
