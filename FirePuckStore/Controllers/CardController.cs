@@ -85,19 +85,6 @@ namespace FirePuckStore.Controllers
         }
 
         //
-        // GET: /Card/Delete/5
-
-        public ActionResult Delete(int id = 0)
-        {
-            Card card = db.Cards.Find(id);
-            if (card == null)
-            {
-                return HttpNotFound();
-            }
-            return View(card);
-        }
-
-        //
         // POST: /Card/Delete/5
 
         [HttpPost, ActionName("Delete")]

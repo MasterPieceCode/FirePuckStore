@@ -1,11 +1,10 @@
 ﻿@model IEnumerable<FirePuckStore.Models.Card>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Cards";
 }
 <header>
     <p class="inlineDisplay">Here you can see all the cards and enjoy sharing you own cards with others! Just click</p><span> @Html.ActionLink("here", "Create", new object(), new { id = "inlineDisplay" })</span> <p class="inlineDisplay">and upload your own card!</p>
 </header>
-
 @foreach (var item in Model)
 {
     <div id="viewCard">
@@ -46,7 +45,43 @@
         </div>
         <div class="cardAction">
             @Html.ActionLink("Edit", "Edit", new { id = item.CardId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.CardId })
+            @Html.ActionLink("Delete", "Delete", new { id = item.CardId }, new { @class = "deleteCard" })
         </div>
     </div>
+}
+<div id="dialog" title="Confirm">
+    Are you sure you want to delete the card?
+    <form id="confirm" method="post">
+    <p>
+        <input type="submit" value="OK" />
+        <button id="cancelButton">Cancel</button>
+    </p>
+    </form>
+ @*   <div>
+        <a id="confirm">OK</a></div>*@
+</div>
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#dialog').dialog({
+                modal: true,
+                autoOpen: false,
+                resizable : false
+            });
+
+            $('#cancelButton').click(function (e) {
+                $('#dialog').dialog("close");
+                e.preventDefault();
+            });
+
+            $('.deleteCard').click(function (e) {
+                $('#confirm').attr('action', e.target.href);
+                $('#dialog').dialog("open");
+                e.preventDefault();
+            });
+
+            $("input:submit, #cancelButton").button();
+        });
+    </script>
 }
