@@ -38,6 +38,18 @@ namespace FirePuckStore.BL.Services.Implementation
             return _cardRepository.GetCardsWithPlayerInfo();
         }
 
+        public void DeleteCard(int cardId)
+        {
+            var card = _cardRepository.FindCardById(cardId);
+
+            if (card == null)
+            {
+                throw new KeyNotFoundException(string.Format("Card with id {0} not found", cardId));
+            }
+
+            _cardRepository.DeleteCard(card);
+        }
+
         private Card ConverToMixedLeagueCard(Card card)
         {
             var result = new Card

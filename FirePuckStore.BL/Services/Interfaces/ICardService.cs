@@ -7,5 +7,6 @@ namespace FirePuckStore.BL.Services.Interfaces
     {
         IDictionary<string, List<Card>> GetOrderedByLeagueWithMixedCards();
         List<Card> GetAllCards();
+        void DeleteCard(int cardId);
     }
 }

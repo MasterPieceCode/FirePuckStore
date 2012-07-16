@@ -90,9 +90,7 @@ namespace FirePuckStore.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Card card = db.Cards.Find(id);
-            db.Cards.Remove(card);
-            db.SaveChanges();
+            _cardService.DeleteCard(id);
             return RedirectToAction("Index");
         }
 

@@ -106,6 +106,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CardControllerUnitTest.cs" />
     <Compile Include="Controllers\CartControllerUnitTest.cs" />
     <Compile Include="Controllers\HomeControllerUnitTest.cs" />
     <Compile Include="Helpers\AssertExtensions.cs" />

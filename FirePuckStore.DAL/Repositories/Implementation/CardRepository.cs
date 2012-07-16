@@ -19,5 +19,16 @@ namespace FirePuckStore.DAL.Repositories.Implementation
         {
             return DbContext.Cards.Include(c => c.Player).ToList();
         }
+
+        public Card FindCardById(int cardId)
+        {
+            return DbContext.Cards.Find(cardId);
+        }
+
+        public void DeleteCard(Card card)
+        {
+            DbContext.Cards.Remove(card);
+            DbContext.SaveChanges();
+        }
     }
 }

@@ -10,5 +10,7 @@ namespace FirePuckStore.DAL.Repositories.Interfaces
     {
         List<Card> GetCards();
         List<Card> GetCardsWithPlayerInfo();
+        Card FindCardById(int cardId);
+        void DeleteCard(Card card);
     }
 }

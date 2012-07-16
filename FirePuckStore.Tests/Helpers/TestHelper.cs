@@ -26,6 +26,11 @@ namespace FirePuckStore.Tests
             return _random.Next(minValue, maxValue);
         }
 
+        public static int CreateRandomId()
+        {
+            return CreateRandomNumber(1, 10);
+        }
+
         public static Dictionary<string, List<Card>> GetRandomDictionaryCardData()
         {
             var result = new Dictionary<string, List<Card>>
@@ -38,7 +43,7 @@ namespace FirePuckStore.Tests
             return new List<Order>() {new Order(), new Order()};
         }
 
-        public static List<Card> CreateRandomCards()
+        public static List<Card> Create2RandomCardsWithDifferentCategories()
         {
             return new List<Card>
                        {
@@ -50,6 +55,11 @@ namespace FirePuckStore.Tests
         public static Card CreateRandomCardWithId(int cardId)
         {
             return new Card {CardId = cardId, Category = CreateRandomString(10)};
+        }
+
+        public static Player CreateRandomPlayerWithId(int playerId)
+        {
+            return new Player { PlayerId = playerId};
         }
     }
 }
