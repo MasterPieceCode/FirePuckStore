@@ -218,6 +218,7 @@
     <Content Include="Content\themes\darkness\jquery.ui.slider.css" />
     <Content Include="Content\themes\darkness\jquery.ui.tabs.css" />
     <Content Include="Content\themes\darkness\jquery.ui.theme.css" />
+    <Content Include="Content\ui.selectmenu.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\jquery-1.6.2-vsdoc.js" />
@@ -236,6 +237,7 @@
     <Content Include="Scripts\knockout-2.0.0.debug.js" />
     <Content Include="Scripts\knockout-2.0.0.js" />
     <Content Include="Scripts\modernizr-2.0.6-development-only.js" />
+    <Content Include="Scripts\ui.selectmenu.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -252,7 +254,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Cards\" />
     <Folder Include="Views\Cart\" />
   </ItemGroup>
   <ItemGroup>

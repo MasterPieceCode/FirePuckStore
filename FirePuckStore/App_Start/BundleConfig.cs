@@ -20,7 +20,8 @@ namespace FirePuckStore
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css", "~/Content/ui.selectmenu.css"));
+
 
             bundles.Add(BundleTheme("base"));
             bundles.Add(BundleTheme("darkness")); 

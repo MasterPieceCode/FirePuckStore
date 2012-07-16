@@ -28,6 +28,23 @@ textarea {
     margin: 0.5em 0 0 0;
 }
 
+.editor-image {
+    float: left;
+    display: inline;
+    padding: 15px;
+    height: 100%;
+}
+
+input, select, .editor-input {
+    background-color: gray;
+    border-color: gray;
+    border-radius: 5px;
+    border-style: none;
+    height: 25px;
+    font-size: larger;
+    color: white;
+    width: 250px;
+}
 
 /* Styles for validation helpers
 -----------------------------------------------------------*/
@@ -81,7 +98,7 @@ textarea {
             -moz-transition: 500ms linear 100ms;
             -o-transition: 500ms linear 100ms;
             
-        } a:hover{
+        } nav a:hover{
             border: none;
             border-radius: 5px;            
             background-color: rgb(73, 56, 62);

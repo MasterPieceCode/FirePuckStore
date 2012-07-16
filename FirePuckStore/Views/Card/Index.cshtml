@@ -52,14 +52,13 @@
 <div id="dialog" title="Confirm">
     Are you sure you want to delete the card?
     <form id="confirm" method="post">
-    <p>
-        <input type="submit" value="OK" />
-        <button id="cancelButton">Cancel</button>
-    </p>
+        <p>
+            <input type="submit" value="OK" tabindex="1" />
+            <button id="cancelButton" tabindex="0">Cancel</button>
+        </p>
     </form>
- @*   <div>
-        <a id="confirm">OK</a></div>*@
 </div>
+
 @section Scripts
 {
     <script type="text/javascript">
