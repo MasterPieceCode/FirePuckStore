@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -41,10 +42,25 @@ namespace FirePuckStore.Controllers
         // POST: /Card/Create
 
         [HttpPost]
+        [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Create(Card card)
         {
             if (ModelState.IsValid)
             {
+                if (Request.Files.Count > 0)
+                {
+                    var logoFile = Request.Files[0];
+                    if (logoFile != null)
+                    {
+                        var physicalPath = HttpContext.Server.MapPath("/Content");
+                        var player = db.Players.Single(p => p.PlayerId == card.PlayerId);
+                        var imageFileName = string.Format("{0}_{1}{2}", player.FullName, db.Cards.Count() + 1, Path.GetExtension(logoFile.FileName));
+                        var imageUrl = Path.Combine(physicalPath, "images", imageFileName);
+                        logoFile.SaveAs(imageUrl);
+                        card.ImageUrl = string.Format("/{0}/{1}", "Content/Images", imageFileName);
+                    }
+                }
+
                 db.Cards.Add(card);
                 db.SaveChanges();
                 return RedirectToAction("Index");
