@@ -146,6 +146,7 @@
   <ItemGroup>
     <Content Include="Content\images\48x48\shopping_cart.png" />
     <Content Include="Content\images\64x64\shopping_cart.png" />
+    <Content Include="Content\images\camera.png" />
     <Content Include="Content\images\cart.jpg" />
     <Content Include="Content\images\cart.png" />
     <Content Include="Content\images\datsyk1.jpg" />

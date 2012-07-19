@@ -11,14 +11,14 @@
     <fieldset>
         <legend>Card</legend>
         <div class="editor-image">
-            <img id="cardLogo" src="~/Content/images/datsyk1.jpg"></img>
+            <img id="cardLogo" src="~/Content/images/camera.png" style="height:50px; background-size: initial"></img>
             <div id ="customFileDialog" class="editor-input" style="width: 270px; cursor: pointer">
                 <span id="filePath" style="font-size: small; display: inline-block; margin: 0px 0px 0px 15px;">No file selected...</span>
                 <button type="button" id='uploadLogo' style="display: inline-block; font-size: x-small; float: right">
-                    Upload</button>
+                    Browse</button>
                 @*<button id = 'uploadLogo' style="display: block">Upload Logo</button>*@
                 <input type="file" id="fileInput" accept="image/jpeg,image/gif,image/x-png" onchange="handleFiles(this.files)"
-                    style="visibility: hidden; position: absolute; top: -50; left: -50" />
+                       style="visibility: hidden; position: absolute; top: -50; left: -50" />
             </div>
         </div>
         <div class="editor-label">
@@ -69,17 +69,32 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script src="/Scripts/ui.selectmenu.js" type="text/javascript"></script>
     <script type="text/javascript">
-        
-        function upload() {
-            $('#fileInput').click();
-        }
 
         function handleFiles(files) {
+            if (files.length == 0) {
+                return;
+            }
             var file = files[0];
-            $('#filePath').text(file.name);
-            $('#cardLogo').attr('src', file.name);            
+            if (!file.type.match('image.*')) {
+                return;
+            }
+            var fileReader = new FileReader();
+
+            fileReader.onload = (function (theFile) {
+                return function (e) {
+                    $('#cardLogo').attr('src', e.target.result);
+                    $('#filePath').text(theFile.name);
+                };
+            })(file);
+            
+/*
+            fileReader.onload(function (theFile) {
+                $('#cardLogo').attr('src', file.name);            
+            })
+*/
+            fileReader.readAsDataURL(file);
         }
-        
+
         function onFileReadComplete(event) {
             // Do something fun with your file contents.
         }
@@ -89,10 +104,6 @@
             $('button').button();
             $('#customFileDialog').mousedown(function (e) {
                 $('#fileInput').click();
-
-/*
-                upload();
-*/
             });
 
 /*
