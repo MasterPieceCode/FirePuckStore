@@ -46,9 +46,14 @@ textarea {
     opacity: 1;
 }
 
+
+
 input[type="file"] {
     visibility: hidden;
+    position: absolute;
 }
+
+
 #uploadLabel {
     height: 100%; 
     top: 150px; 

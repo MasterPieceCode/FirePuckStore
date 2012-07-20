@@ -12,8 +12,8 @@
         <legend>Card</legend>
         <div class="editor-image">
             <span id='uploadLabel'>Click here to upload logo</span>
-            @*<img id="logo" src="" style="visibility: hidden"></img>*@
-            <input id="fileInput"  name ="fileInput"type="file" accept="image/jpeg,image/gif,image/x-png" onchange="handleFiles(this.files)" />
+            <img id="logo" src="" style="visibility: hidden"></img>
+            <input id="fileInput" name ="fileInput"type="file" accept="image/jpeg,image/gif,image/x-png" onchange="handleFiles(this.files)" />
         </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.Category)
@@ -51,8 +51,7 @@
             @Html.ValidationMessageFor(model => model.Price)
         </div>
         <p>
-            <button type="submit" value="Create">
-                Create</button>
+            <button type="submit" value="Create">Create</button>
         </p>
     </fieldset>
 }
@@ -60,7 +59,7 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @*@Scripts.Render("~/bundles/jqueryval")*@
     <script src="/Scripts/ui.selectmenu.js" type="text/javascript"></script>
     <script src="/Scripts/ui.imageselector.js" type="text/javascript"></script>
     <script type="text/javascript">
