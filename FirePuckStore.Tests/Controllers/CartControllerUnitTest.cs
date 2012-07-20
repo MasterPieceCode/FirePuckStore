@@ -26,7 +26,7 @@ namespace FirePuckStore.Tests.Controllers
             var result = controller.Details() as PartialViewResult;
 
             serviceMock.Verify(x => x.GetCart(), Times.Once());
-            result.WithNameHasModelType<IList<Order>>("PartialCart");
+            result.WithNameHasModelType<IList<Order>>("_Cart");
             Assert.Equal(2, orderedCards.Count);
         }
     }

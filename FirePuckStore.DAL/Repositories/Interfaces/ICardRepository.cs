@@ -6,11 +6,14 @@ using FirePuckStore.Models;
 
 namespace FirePuckStore.DAL.Repositories.Interfaces
 {
-    public interface ICardRepository
+    public interface ICardRepository : IDisposable
     {
         List<Card> GetCards();
         List<Card> GetCardsWithPlayerInfo();
         Card FindCardById(int cardId);
+        Card FindCardByIdAsNoTracking(int cardId);
         void DeleteCard(Card card);
+        void AddCard(Card card);
+        void UpdateCard(Card card);
     }
 }

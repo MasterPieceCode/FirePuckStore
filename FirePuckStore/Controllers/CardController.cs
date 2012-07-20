@@ -14,9 +14,9 @@ namespace FirePuckStore.Controllers
 {
     public class CardController : Controller
     {
-        private readonly ICardService _cardService;
+        private readonly ICardService _cardService;    
         private PuckStoreDbContext db = new PuckStoreDbContext();
-
+ 
         public CardController(ICardService cardService)
         {
             _cardService = cardService;
@@ -34,7 +34,7 @@ namespace FirePuckStore.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.PlayerId = new SelectList(db.Players, "PlayerId", "FullName");
+            ViewBag.PlayerIdList = new SelectList(db.Players, "PlayerId", "FullName");
             return View();
         }
 
@@ -44,29 +44,15 @@ namespace FirePuckStore.Controllers
         [HttpPost]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Create(Card card)
-        {
+        {            
             if (ModelState.IsValid)
             {
-                if (Request.Files.Count > 0)
-                {
-                    var logoFile = Request.Files[0];
-                    if (logoFile != null)
-                    {
-                        var physicalPath = HttpContext.Server.MapPath("/Content");
-                        var player = db.Players.Single(p => p.PlayerId == card.PlayerId);
-                        var imageFileName = string.Format("{0}_{1}{2}", player.FullName, db.Cards.Count() + 1, Path.GetExtension(logoFile.FileName));
-                        var imageUrl = Path.Combine(physicalPath, "images", imageFileName);
-                        logoFile.SaveAs(imageUrl);
-                        card.ImageUrl = string.Format("/{0}/{1}", "Content/Images", imageFileName);
-                    }
-                }
+                _cardService.Add(card);
 
-                db.Cards.Add(card);
-                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PlayerId = new SelectList(db.Players, "PlayerId", "FullName", card.PlayerId);
+            ViewBag.PlayerIdList = new SelectList(db.Players, "PlayerId", "FullName", card.PlayerId);
             return View(card);
         }
 
@@ -75,12 +61,12 @@ namespace FirePuckStore.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Card card = db.Cards.Find(id);
+            var card = _cardService.GetById(id);
             if (card == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.PlayerId = new SelectList(db.Players, "PlayerId", "FullName", card.PlayerId);
+            ViewBag.PlayerIdList = new SelectList(db.Players.AsNoTracking(), "PlayerId", "FullName", card.PlayerId);
             return View(card);
         }
 
@@ -92,11 +78,11 @@ namespace FirePuckStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(card).State = EntityState.Modified;
-                db.SaveChanges();
+                _cardService.Update(card);
+
                 return RedirectToAction("Index");
             }
-            ViewBag.PlayerId = new SelectList(db.Players, "PlayerId", "FullName", card.PlayerId);
+            ViewBag.PlayerIdList = new SelectList(db.Players.AsNoTracking(), "PlayerId", "FullName", card.PlayerId);
             return View(card);
         }
 
@@ -113,6 +99,7 @@ namespace FirePuckStore.Controllers
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
+            _cardService.Dispose();
             base.Dispose(disposing);
         }
     }

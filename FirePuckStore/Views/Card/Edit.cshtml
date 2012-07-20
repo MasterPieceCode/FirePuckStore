@@ -6,7 +6,7 @@
 
 <h2>Edit</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("Edit", "Card", FormMethod.Post, new { enctype = "multipart/form-data" })) {
     @Html.ValidationSummary(true)
 
     <fieldset>
@@ -14,11 +14,7 @@
 
         @Html.HiddenFor(model => model.CardId)
 
-        <div class="editor-image">
-            <span id='uploadLabel'>Click here to upload logo</span>
-            <img id="logo" src=@Model.ImageUrl style="visibility: hidden"></img>
-            <input id="fileInput" type="file" accept="image/jpeg,image/gif,image/x-png" onchange="handleFiles(this.files)" />
-        </div>
+         @Html.Partial("_ImageUploader", Model)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Category)
@@ -40,7 +36,7 @@
             @Html.LabelFor(model => model.PlayerId, "Player")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("PlayerId", String.Empty)
+            @Html.DropDownListFor(model => model.PlayerId, (IEnumerable<SelectListItem>)ViewBag.PlayerIdList, String.Empty)
             @Html.ValidationMessageFor(model => model.PlayerId)
         </div>
         <div class="editor-label">

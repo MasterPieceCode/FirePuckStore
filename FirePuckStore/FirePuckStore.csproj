@@ -269,7 +269,7 @@
     <Content Include="Content\images\Stickers-shopping_cart-icon-png.zip" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\PartialCart.cshtml" />
+    <Content Include="Views\Shared\_Cart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FirePuckStore.BL\FirePuckStore.BL.csproj">
@@ -293,6 +293,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Card\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_ImageUploader.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

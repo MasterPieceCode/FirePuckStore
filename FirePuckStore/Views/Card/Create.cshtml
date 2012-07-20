@@ -10,12 +10,8 @@
 
     <fieldset>
         <legend>Card</legend>
-        <div class="editor-image">
-            <span id='uploadLabel'>Click here to upload logo</span>
-            @*<img id="logo" src="" style="visibility: hidden"></img>*@
-            <input id="fileInput"  name ="fileInput"type="file" accept="image/jpeg,image/gif,image/x-png" onchange="handleFiles(this.files)" />
-        </div>
-        <div class="editor-label">
+         @Html.Partial("_ImageUploader", Model)
+        <div class="editor-label">            
             @Html.LabelFor(model => model.Category)
         </div>
         <div class="editor-field">
@@ -33,7 +29,7 @@
             @Html.LabelFor(model => model.PlayerId, "Player")
         </div>
         <div class="editor-field">
-            @Html.DropDownList("PlayerId", String.Empty)
+            @Html.DropDownListFor(model => model.PlayerId, (IEnumerable<SelectListItem>)ViewBag.PlayerIdList, String.Empty)
             @Html.ValidationMessageFor(model => model.PlayerId)
         </div>
         <div class="editor-label">

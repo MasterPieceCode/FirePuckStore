@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web;
 using FirePuckStore.BL.Services.Implementation;
+using FirePuckStore.BL.Services.Interfaces;
 using FirePuckStore.DAL.Repositories.Interfaces;
 using FirePuckStore.Models;
 using FirePuckStore.Tests.Helpers;
@@ -22,7 +25,8 @@ namespace FirePuckStore.Tests.Services
 
             mockRepository.Setup(cardRepository => cardRepository.GetCards()).Returns(randomCards);
 
-            var service = new CardService(mockRepository.Object);
+            var mockFileService = new Mock<IFileService>();
+            var service = new CardService(mockRepository.Object, mockFileService.Object);
 
             var actual = service.GetOrderedByLeagueWithMixedCards();
 
@@ -54,23 +58,159 @@ namespace FirePuckStore.Tests.Services
         {
             var mockRepository = new Mock<ICardRepository>();
 
-            var expected = TestHelper.Create2RandomCardsWithDifferentCategories();
+            var expected = TestHelper.CreateRandomCardWithId(TestHelper.CreateRandomId());
 
-            mockRepository.Setup(cardRepository => cardRepository.GetCardsWithPlayerInfo()).Returns(expected);
+            var fileServiceMock = new Mock<IFileService>();
+            var service = new CardService(mockRepository.Object, fileServiceMock.Object);
 
-            var service = new CardService(mockRepository.Object);
-            var actual = service.GetAllCards();
+            service.Add(expected);
 
-            mockRepository.Verify(cardRepository => cardRepository.GetCardsWithPlayerInfo(), Times.Once());
-
-            Assert.Equal(actual.Count, 2);
-
-            actual.ContainsCard(expected[0]);
-            actual.ContainsCard(expected[1]);
+            mockRepository.Verify(cardRepository => cardRepository.AddCard(expected), Times.Once());
         }
 
         [Fact]
-        public void TestDeleteCardById()
+        public void TestGetCardById()
+        {
+            var mockRepository = new Mock<ICardRepository>();
+
+            var expectedCardId = TestHelper.CreateRandomId();
+            var expected = TestHelper.CreateRandomCardWithId(expectedCardId);
+
+            mockRepository.Setup(repository => repository.FindCardById(expectedCardId)).Returns(expected);
+            var fileServiceMock = new Mock<IFileService>();
+            var service = new CardService(mockRepository.Object, fileServiceMock.Object);
+
+            var actual = service.GetById(expectedCardId);
+
+            mockRepository.Verify(cardRepository => cardRepository.FindCardById(expectedCardId), Times.Once());
+            Assert.Equal(expected, actual, new CardComparer());
+        }
+
+        [Fact]
+        public void TestAddCardWithImageInput()
+        {
+            var mockRepository = new Mock<ICardRepository>();
+
+            var expectedCard = TestHelper.CreateRandomCardWithId(TestHelper.CreateRandomId());
+            var postedFileMock = new Mock<HttpPostedFileBase>();
+            expectedCard.FileInput = postedFileMock.Object;
+
+            var uploadedFileName = TestHelper.CreateRandomString(5);
+            var physicalPath = TestHelper.CreateRandomString(15);
+
+            var fileServiceMock = new Mock<IFileService>();
+
+            SetupFileServiceForImageUploading(fileServiceMock, physicalPath, postedFileMock, uploadedFileName);
+
+            var service = new CardService(mockRepository.Object, fileServiceMock.Object);
+
+            service.Add(expectedCard);
+
+            VerifyImageWasUploadedToPhysicalPath(fileServiceMock, physicalPath, expectedCard.ImageUrl, uploadedFileName, postedFileMock);
+            mockRepository.Verify(cardRepository => cardRepository.AddCard(expectedCard), Times.Once());
+        }
+
+        [Fact]
+        public void TestUpdateCardWithoutImageInput()
+        {
+            var mockRepository = new Mock<ICardRepository>();
+
+            var cardId = TestHelper.CreateRandomId();
+            var expectedCard = TestHelper.CreateRandomCardWithId(cardId);
+            var dbCard = TestHelper.CreateRandomCardWithId(cardId);
+            dbCard.ImageUrl = TestHelper.CreateRandomString(10);
+
+            mockRepository.Setup(repository => repository.FindCardById(cardId)).Returns(dbCard);
+
+            var fileServiceMock = new Mock<IFileService>();
+
+            var service = new CardService(mockRepository.Object, fileServiceMock.Object);
+            service.Update(expectedCard);
+
+            mockRepository.Verify(repository => repository.FindCardById(cardId), Times.Once());
+            mockRepository.Verify(cardRepository => cardRepository.UpdateCard(expectedCard), Times.Once());            
+            Assert.Equal(expectedCard.ImageUrl, dbCard.ImageUrl);
+        }
+
+        [Fact]
+        public void TestUpdateCardWithImageInputAndNotAssignedImageUrl()
+        {
+            var mockRepository = new Mock<ICardRepository>();
+            var cardId = TestHelper.CreateRandomId();
+            var expectedCard = TestHelper.CreateRandomCardWithId(cardId);
+
+            var postedFileMock = new Mock<HttpPostedFileBase>();
+            expectedCard.FileInput = postedFileMock.Object;
+
+            var fileServiceMock = new Mock<IFileService>();
+
+            mockRepository.Setup(repository => repository.FindCardById(cardId)).Returns(expectedCard);
+
+            var uploadedFileName = TestHelper.CreateRandomString(5);
+            var physicalPath = TestHelper.CreateRandomString(15);
+
+            SetupFileServiceForImageUploading(fileServiceMock, physicalPath, postedFileMock, uploadedFileName);
+
+            var service = new CardService(mockRepository.Object, fileServiceMock.Object);
+            service.Update(expectedCard);
+
+            mockRepository.Verify(repository => repository.FindCardById(cardId), Times.Once());
+            VerifyImageWasUploadedToPhysicalPath(fileServiceMock, physicalPath, expectedCard.ImageUrl, uploadedFileName, postedFileMock);
+
+            fileServiceMock.Verify(fileService => fileService.DeleteFileFromServer(expectedCard.ImageUrl), Times.Never());
+            mockRepository.Verify(cardRepository => cardRepository.UpdateCard(expectedCard), Times.Once());
+        }
+
+        [Fact]
+        public void TestUpdateCardWithImageInputAndAssignedImageUrl()
+        {
+            var mockRepository = new Mock<ICardRepository>();
+            var cardId = TestHelper.CreateRandomId();
+            var expectedCard = TestHelper.CreateRandomCardWithId(cardId);
+            var postedFileMock = new Mock<HttpPostedFileBase>();
+            expectedCard.FileInput = postedFileMock.Object;
+            var dbCard = TestHelper.CreateRandomCardWithId(cardId);
+            dbCard.ImageUrl = TestHelper.CreateRandomString(15);
+            var fileServiceMock = new Mock<IFileService>();
+
+            mockRepository.Setup(repository => repository.FindCardById(cardId)).Returns(dbCard);
+
+            var uploadedFileName = TestHelper.CreateRandomString(5);
+            var physicalPath = TestHelper.CreateRandomString(15);
+            var previousUploadedImagePhysicalPath = TestHelper.CreateRandomString(15);
+
+            fileServiceMock.Setup(fileService => fileService.GetPhysicalPath(null, dbCard.ImageUrl)).Returns(previousUploadedImagePhysicalPath);
+
+            SetupFileServiceForImageUploading(fileServiceMock, physicalPath, postedFileMock, uploadedFileName);
+
+            var service = new CardService(mockRepository.Object, fileServiceMock.Object);
+            service.Update(expectedCard);
+
+            mockRepository.Verify(repository => repository.FindCardById(cardId), Times.Once());
+            fileServiceMock.Verify(fileService => fileService.GetPhysicalPath(null, dbCard.ImageUrl), Times.Once());
+            fileServiceMock.Verify(fileService => fileService.DeleteFileFromServer(previousUploadedImagePhysicalPath), Times.Once());
+            VerifyImageWasUploadedToPhysicalPath(fileServiceMock, physicalPath, expectedCard.ImageUrl, uploadedFileName, postedFileMock);
+
+            mockRepository.Verify(cardRepository => cardRepository.UpdateCard(expectedCard), Times.Once());
+        }
+
+        private static void SetupFileServiceForImageUploading(Mock<IFileService> fileServiceMock, string physicalPath, Mock<HttpPostedFileBase> postedFileMock,
+                                                              string imageFileName)
+        {
+            fileServiceMock.Setup(fileService => fileService.GetPhysicalPath(null, CardService.CardImagesServerPath)).Returns(physicalPath);
+            fileServiceMock.Setup(fileService => fileService.UploadToServerPath(physicalPath, postedFileMock.Object)).Returns(imageFileName);
+        }
+
+        private static void VerifyImageWasUploadedToPhysicalPath(Mock<IFileService> fileServiceMock, string physicalPath, string actualServerPath, string uploadedFileName, Mock<HttpPostedFileBase> postedFileMock)
+        {
+            fileServiceMock.Verify(fileService => fileService.GetPhysicalPath(null, CardService.CardImagesServerPath), Times.Once());
+            fileServiceMock.Verify(fileService => fileService.UploadToServerPath(physicalPath, postedFileMock.Object), Times.Once());
+            var expectedServerPath = Path.Combine(CardService.CardImagesServerPath, uploadedFileName);
+            Assert.Equal(actualServerPath, expectedServerPath);
+        }
+
+        [Fact]
+        public void TestDeleteCardWithoutImageUploadedById()
         {
             var mockRepository = new Mock<ICardRepository>();
 
@@ -79,9 +219,33 @@ namespace FirePuckStore.Tests.Services
 
             mockRepository.Setup(cardRepository => cardRepository.FindCardById(cardId)).Returns(card);
 
-            var service = new CardService(mockRepository.Object);
+            var fileServiceMock = new Mock<IFileService>();
+
+            var service = new CardService(mockRepository.Object, fileServiceMock.Object);
             service.DeleteCard(cardId);
 
+            mockRepository.Verify(cardRepository => cardRepository.FindCardById(cardId), Times.Once());
+            mockRepository.Verify(cardRepository => cardRepository.DeleteCard(card), Times.Once());
+        }
+
+        [Fact]
+        public void TestDeleteCardWithImageUploadedById()
+        {
+            var mockRepository = new Mock<ICardRepository>();
+
+            var cardId = TestHelper.CreateRandomNumber(1, 10);
+            var card = TestHelper.CreateRandomCardWithId(cardId);
+            card.ImageUrl = TestHelper.CreateRandomString(5);
+            var cardImagePhysicalPath = TestHelper.CreateRandomString(15);
+            mockRepository.Setup(cardRepository => cardRepository.FindCardById(cardId)).Returns(card);
+
+            var fileServiceMock = new Mock<IFileService>();
+            fileServiceMock.Setup(fileService => fileService.GetPhysicalPath(null, card.ImageUrl)).Returns(cardImagePhysicalPath);
+
+            var service = new CardService(mockRepository.Object, fileServiceMock.Object);
+            service.DeleteCard(cardId);
+
+            fileServiceMock.Verify(fileService => fileService.DeleteFileFromServer(cardImagePhysicalPath), Times.Once());
             mockRepository.Verify(cardRepository => cardRepository.FindCardById(cardId), Times.Once());
             mockRepository.Verify(cardRepository => cardRepository.DeleteCard(card), Times.Once());
         }
@@ -93,9 +257,11 @@ namespace FirePuckStore.Tests.Services
 
             var cardId = TestHelper.CreateRandomNumber(1, 10);
 
+            var fileServiceMock = new Mock<IFileService>();
+
             mockRepository.Setup(cardRepository => cardRepository.FindCardById(cardId)).Returns((Card)null);
 
-            var service = new CardService(mockRepository.Object);
+            var service = new CardService(mockRepository.Object, fileServiceMock.Object);
 
             Assert.Throws<KeyNotFoundException>(() => service.DeleteCard(cardId));
 

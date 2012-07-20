@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Data.Entity;
 using System.Text;
@@ -25,10 +26,32 @@ namespace FirePuckStore.DAL.Repositories.Implementation
             return DbContext.Cards.Find(cardId);
         }
 
+        public Card FindCardByIdAsNoTracking(int cardId)
+        {
+            return DbContext.Cards.Where(c => c.CardId == cardId).AsNoTracking().FirstOrDefault();
+        }
+
         public void DeleteCard(Card card)
         {
             DbContext.Cards.Remove(card);
             DbContext.SaveChanges();
+        }
+
+        public void AddCard(Card card)
+        {
+            DbContext.Cards.Add(card);
+            DbContext.SaveChanges();
+        }
+
+        public void UpdateCard(Card card)
+        {
+            DbContext.Entry(card).State = EntityState.Modified;
+            DbContext.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            DbContext.Dispose();
         }
     }
 }

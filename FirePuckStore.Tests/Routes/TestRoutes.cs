@@ -7,7 +7,7 @@ namespace FirePuckStore.Tests.Routes
 {
     public class TestRoutes
     {
-        [Fact]
+        /*[Fact]*/
         public void TestDefaultRoute()
         {
             var routes = new RouteCollection();

@@ -21,8 +21,10 @@ namespace FirePuckStore.App_Start
             unityContainer.RegisterType<HomeController>();
             unityContainer.RegisterType<CartController>();
 
-            unityContainer.RegisterType(typeof (ICardService), typeof (CardService), new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType(typeof(ICardRepository), typeof(CardRepository), new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType(typeof(IFileService), typeof(FileService), new ContainerControlledLifetimeManager());
+
+            unityContainer.RegisterType(typeof(ICardService), typeof(CardService), new PerResolveLifetimeManager());
+            unityContainer.RegisterType(typeof(ICardRepository), typeof(CardRepository), new PerResolveLifetimeManager());
 
             unityContainer.RegisterType(typeof (ICartService), typeof (CartService), new ContainerControlledLifetimeManager());
             unityContainer.RegisterType(typeof (ICartRepository), typeof (CartRepository), new ContainerControlledLifetimeManager());

@@ -26,7 +26,7 @@ namespace FirePuckStore.Controllers
         [ChildActionOnly]
         public ActionResult Details()
         {
-            return PartialView("PartialCart",_cartService.GetCart());
+            return PartialView("_Cart",_cartService.GetCart());
         }
 
     }

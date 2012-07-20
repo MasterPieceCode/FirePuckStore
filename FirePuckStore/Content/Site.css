@@ -46,9 +46,13 @@ textarea {
     opacity: 1;
 }
 
+
 input[type="file"] {
     visibility: hidden;
+    position: absolute;
 }
+
+
 #uploadLabel {
     height: 100%; 
     top: 150px; 
@@ -57,7 +61,7 @@ input[type="file"] {
     position: relative;
 }
 
-input, select, .editor-input {
+input[class~="text-box"], select, .editor-input {
     background-color: gray;
     border-color: gray;
     border-radius: 5px;
@@ -80,7 +84,7 @@ input, select, .editor-input {
 
 .input-validation-error {
     border: 1px solid #f00;
-    background-color: #fee;
+    background-color: gray;
 }
 
 .validation-summary-errors {
