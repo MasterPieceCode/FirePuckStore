@@ -153,6 +153,7 @@
     <Content Include="Content\images\datsyk2.jpg" />
     <Content Include="Content\images\datsyk3.jpg" />
     <Content Include="Content\images\favicon.ico" />
+    <Content Include="Content\images\fileUpload.jpg" />
     <Content Include="Content\images\ICON.ico" />
     <Content Include="Content\images\malkin1.jpg" />
     <Content Include="Content\images\malkin2.jpg" />
@@ -222,6 +223,7 @@
     <Content Include="Content\ui.selectmenu.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\ui.imageselector.js" />
     <Content Include="Scripts\jquery-1.6.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.7.2.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.21.custom.js" />
