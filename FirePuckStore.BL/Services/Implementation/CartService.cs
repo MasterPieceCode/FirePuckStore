@@ -56,9 +56,36 @@ namespace FirePuckStore.BL.Services.Implementation
             return order;
         }
 
+        public Order UnPlace1QuantityOrderAndReturnSummaryOrderForCard(int cardId)
+        {
+            var card = _cardService.GetById(cardId);
+
+            var order = _cartRepository.GetOrderForCardId(cardId);
+            --order.Quantity;
+            if (order.Quantity > 0)
+            {
+                _cartRepository.UpdateOrder(order);
+            }
+            else
+            {
+                _cartRepository.DeleteOrder(order.OrderId);
+            }
+
+            order.Card = card;
+            CalculateTotalPriceForOrder(order);
+            IncreaseAmountBy1QuantityForCardInStore(card);
+            return order;
+        }
+
         private void ReduceAmountBy1QuantityForCardInStore(Card card)
         {
             --card.Quantity;
+            _cardService.Update(card);
+        }
+
+        private void IncreaseAmountBy1QuantityForCardInStore(Card card)
+        {
+            ++card.Quantity;
             _cardService.Update(card);
         }
 

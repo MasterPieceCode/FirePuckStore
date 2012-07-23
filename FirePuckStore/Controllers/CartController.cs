@@ -37,7 +37,15 @@ namespace FirePuckStore.Controllers
         [HttpPost]
         public ActionResult Add(CartInputModel cartInputModel)
         {
-            var order = _cartService.Place1QuantityOrderAndReturnSummaryOrderForCard(cartInputModel.CardId);
+            _cartService.Place1QuantityOrderAndReturnSummaryOrderForCard(cartInputModel.CardId);
+            /*return Json(new {order.Quantity, order.Price, Rest = order.Card.Quantity});*/
+            return PartialView("_Cart", _cartService.GetCart());
+        }
+
+        [HttpPost]
+        public ActionResult Delete(CartInputModel cartInputModel)
+        {
+            _cartService.UnPlace1QuantityOrderAndReturnSummaryOrderForCard(cartInputModel.CardId);
             /*return Json(new {order.Quantity, order.Price, Rest = order.Card.Quantity});*/
             return PartialView("_Cart", _cartService.GetCart());
         }

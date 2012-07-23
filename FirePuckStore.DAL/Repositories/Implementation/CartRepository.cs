@@ -32,5 +32,12 @@ namespace FirePuckStore.DAL.Repositories.Implementation
             DbContext.Entry(order).State = EntityState.Modified;
             DbContext.SaveChanges();   
         }
+
+        public void DeleteOrder(int orderId)
+        {
+            var order = DbContext.Orders.Find(orderId);
+            DbContext.Orders.Remove(order);
+            DbContext.SaveChanges();
+        }
     }
 }

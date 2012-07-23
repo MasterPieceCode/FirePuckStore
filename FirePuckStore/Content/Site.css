@@ -267,6 +267,12 @@ input[class~="text-box"], select, .editor-input {
             height: 100px;
             display: inline-block;
             padding: 0px 0px;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        
+        .cartImg:hover {
+            opacity: 1;
         }
         
         .inlineImage {

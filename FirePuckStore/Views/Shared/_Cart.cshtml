@@ -10,11 +10,11 @@
     @foreach(var order in Model)
     {
         <div class="cartItem">
-            <img class = "cartImg" src="@order.Card.ImageUrl"/>
+            <img class = "cartImg" ordercardid = "@order.Card.CardId" draggable="false"  src="@order.Card.ImageUrl"/>
             <br/>
-            <h6>Qnty:</h6><span> @order.Quantity</span>
+            <h6>Qnty:</h6><span class="pricequantity"> @order.Quantity</span>
             <br/>
-            <h6>Price:</h6><span> @order.Price</span>
+            <h6>Price:</h6><span class="pricelabel"> @order.Price</span>
         </div>
     }
 </aside>

@@ -12,5 +12,6 @@ namespace FirePuckStore.DAL.Repositories.Interfaces
         Order GetOrderForCardId(int cardId);
         void AddOrder(Order orderForCard);
         void UpdateOrder(Order order);
+        void DeleteOrder(int order);
     }
 }

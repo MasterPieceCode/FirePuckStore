@@ -15,10 +15,12 @@
             @foreach (var card in category.Value)
             {
                 <div class="cartItem">
-                    <img class="cardImg" id = "@card.CardId"  src="@card.ImageUrl" alt="@card.Description" @(card.Quantity > 0 ? "draggable=true" : "draggable=false class = noItemsInStore") />
-                    <div class = "cardDescription">
+                    <img cardid = "@card.CardId"  src="@card.ImageUrl" alt="@card.Description" @(card.Quantity > 0 ? "draggable=true" : "draggable=false class = noItemsInStore") />
+@*
+                    <div class = "cardDescription" style="display: none">
                         <p>@card.Description</p>
                     </div>
+*@
                         @{
 
                             if (card.Quantity > 0)
@@ -62,8 +64,8 @@
             shoppingCart.ondragenter = handleDrag;
             shoppingCart.ondragover = handleDrag;
             shoppingCart.ondrop = function (e) {
-                
-                var newElem = document.getElementById(draggedID).cloneNode(false);
+
+                /*var newElem =$("img[cardid~=" + draggedID + "]").first().cloneNode(false);*/
 
                 var card = { CardId: draggedID };
 
@@ -76,6 +78,29 @@
                     success: function (data) {
                         $("aside").replaceWith(data);
                         subscribeAtDragDropEvents();
+                        subscribeAtCardClickEvent();
+                        var cards = $("img[cardid~=" + draggedID + "]");
+                        var quantites = cards.parent().find("span:first");
+                        var oldQuantity = quantites.first().text();
+                        var newQuantity = oldQuantity - 1;
+                        if (newQuantity == 0) {
+                            var noStockHtml = $("<br/><h6>Not in stock</h6><br /><h6 />");
+                            cards.attr('draggable',"false");
+                            cards.addClass('noItemsInStore');
+                            cards.nextAll().remove();
+                            cards.parent().append(noStockHtml);
+                            return;
+                        }
+
+                        quantites.each(function () {
+                            $(this).text(newQuantity);
+                        });
+
+                        /*
+                        var cardEl = document.getElementById(draggedID);
+                        var quantity = $(cardEl.parentElement).find("span:first");
+                        */
+
                         // get the result and do some magic with it
                         /*
                         newElem.classList.add("cartImg");
@@ -91,24 +116,76 @@
             };
         }
 
+        function subscribeAtCardClickEvent() {
+            $(".cartImg").bind('click', function (e) {
+                var card = { CardId: $(e.target).attr("ordercardid") };
+                $.ajax({
+                    url: '/Cart/Delete',
+                    type: 'POST',
+                    data: card,
+                    success: function (data) {
+                        $("aside").replaceWith(data);
+                        subscribeAtDragDropEvents();
+                        subscribeAtCardClickEvent();
+
+                        var cards = $("img[cardid~=" + card.CardId + "]");
+                        if (cards.first().hasClass('noItemsInStore')) {
+                            var quantity = parseInt($(e.target).parent().find(".pricequantity").text());
+                            var price = $(e.target).parent().find(".pricelabel").text();
+                            var pricePerItem = (parseFloat(price) / quantity).toFixed(2);
+                            var noStockHtml = $("<br/><h6>Qnty:</h6><span> 1</span><br/><h6>Price:</h6><span> " + pricePerItem + "</span>");
+
+                            cards.attr('draggable', "true");
+                            cards.removeClass('noItemsInStore');
+                            cards.nextAll().remove();
+                            cards.parent().append(noStockHtml);
+                            return;
+                        }
+
+                        var quantites = cards.parent().find("span:first");
+                        var oldQuantity = quantites.first().text();
+                        var newQuantity = parseInt(oldQuantity) + 1;
+                        quantites.each(function () {
+                            $(this).text(' ' + newQuantity);
+                        });
+                    }
+                });
+            });
+        }
+
         $(document).ready(function () {
             $("#categorySection").accordion({ active: true });
-
-
+            subscribeAtCardClickEvent();
+            /*
             $('.cardDescription').dialog({
-                modal: false,
-                autoOpen: false,
-                resizable: false
+            modal: false,
+            autoOpen: false,
+            resizable: false
+            });*/
+
+            /*            $('.cardImg').mouseenter(function (e) {
+
+            var cardDescription = $(this.parentElement).find(".cardDescription");
+            cardDescription.fadeIn('slow', function () {
+            // Animation complete
+            });
+            e.preventDefault();
             });
 
-            $('.cardImg').mouseenter(function (e) {
-                $('.cardDescription').dialog("open");
-                e.preventDefault();
+            $('.cardImg').mouseout(function (e) {
+
+            /*  alert('leave');#1#
+            var cardDescription = $(this.parentElement).find(".cardDescription");
+            cardDescription.fadeOut('slow', function () {
+            // Animation complete
             });
+            e.preventDefault();
+            });*/
+
 
             var src = document.getElementById("categorySection");
             src.ondragstart = function (e) {
-                draggedID = e.target.id;
+                draggedID = $(e.target).attr("cardid");
                 e.target.classList.add("dragged");
             };
 

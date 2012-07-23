@@ -8,5 +8,6 @@ namespace FirePuckStore.BL.Services.Interfaces
     {
         List<Order> GetCart();
         Order Place1QuantityOrderAndReturnSummaryOrderForCard(int cardId);
+        Order UnPlace1QuantityOrderAndReturnSummaryOrderForCard(int cardId);
     }
 }
