@@ -6,8 +6,11 @@ using FirePuckStore.Models;
 
 namespace FirePuckStore.DAL.Repositories.Interfaces
 {
-    public interface ICartRepository
+    public interface ICartRepository : IDisposable
     {
-        List<Order> GetOrders();
+        List<Order> GetCartOrder();
+        Order GetOrderForCardId(int cardId);
+        void AddOrder(Order orderForCard);
+        void UpdateOrder(Order order);
     }
 }

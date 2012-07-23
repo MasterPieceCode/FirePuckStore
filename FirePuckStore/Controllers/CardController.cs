@@ -98,7 +98,6 @@ namespace FirePuckStore.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
             _cardService.Dispose();
             base.Dispose(disposing);
         }

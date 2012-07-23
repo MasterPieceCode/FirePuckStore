@@ -54,12 +54,28 @@ namespace FirePuckStore.Tests
 
         public static Card CreateRandomCardWithId(int cardId)
         {
-            return new Card {CardId = cardId, Category = CreateRandomString(10)};
+            return new Card { CardId = cardId, Category = CreateRandomString(10), Quantity = CreateRandomNumber(1, 20) };
         }
 
         public static Player CreateRandomPlayerWithId(int playerId)
         {
             return new Player { PlayerId = playerId};
+        }
+
+        public static Order CreateRandomOrderForCardId(int cardId)
+        {
+            var result = new Order
+                             {
+                                 OrderId = CreateRandomNumber(1, 10),
+                                 Quantity = CreateRandomNumber(1, 20)
+                             };
+
+            var card = CreateRandomCardWithId(CreateRandomNumber(1, 10));
+            
+            card.Price = CreateRandomNumber(20, 100);
+            result.Card = card;
+
+            return result;
         }
     }
 }

@@ -114,6 +114,7 @@
     <Compile Include="Helpers\TestHelper.cs" />
     <Compile Include="Routes\TestRoutes.cs" />
     <Compile Include="Services\CardServiceUnitTests.cs" />
+    <Compile Include="Services\CartServiceUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />

@@ -9,7 +9,7 @@ namespace FirePuckStore.DAL.Repositories.Interfaces
     public interface ICardRepository : IDisposable
     {
         List<Card> GetCards();
-        List<Card> GetCardsWithPlayerInfo();
+        List<Card> GetAllCardsWithPlayerInfo();
         Card FindCardById(int cardId);
         Card FindCardByIdAsNoTracking(int cardId);
         void DeleteCard(Card card);

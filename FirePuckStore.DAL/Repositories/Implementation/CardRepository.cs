@@ -16,7 +16,7 @@ namespace FirePuckStore.DAL.Repositories.Implementation
             return DbContext.Cards.ToList();
         }
 
-        public List<Card> GetCardsWithPlayerInfo()
+        public List<Card> GetAllCardsWithPlayerInfo()
         {
             return DbContext.Cards.Include(c => c.Player).ToList();
         }
@@ -47,11 +47,6 @@ namespace FirePuckStore.DAL.Repositories.Implementation
         {
             DbContext.Entry(card).State = EntityState.Modified;
             DbContext.SaveChanges();
-        }
-
-        public void Dispose()
-        {
-            DbContext.Dispose();
         }
     }
 }

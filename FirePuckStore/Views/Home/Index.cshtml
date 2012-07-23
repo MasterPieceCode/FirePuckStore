@@ -14,7 +14,34 @@
         <div>
             @foreach (var card in category.Value)
             {
-                <img id = @card.CardId draggable="true" src="@card.ImageUrl" alt="@card.Description"/>
+                <div class="cartItem">
+                    <img class="cardImg" id = "@card.CardId"  src="@card.ImageUrl" alt="@card.Description" @(card.Quantity > 0 ? "draggable=true" : "draggable=false class = noItemsInStore") />
+                    <div class = "cardDescription">
+                        <p>@card.Description</p>
+                    </div>
+                        @{
+
+                            if (card.Quantity > 0)
+                            {
+                                <br />
+                                <h6>
+                                    Qnty:</h6>
+                                <span>@card.Quantity</span>
+                                <br />
+                                <h6>
+                                    Price:</h6>
+                                <span>@card.Price</span>
+                            }
+                            else
+                            {
+                                <br />                        
+                                <h6>
+                                    Not in stock</h6>                        
+                                <br />                        
+                                <h6 />
+                            }
+                        }
+                    </div>
             }
         </div>
         }
@@ -29,8 +56,55 @@
             e.preventDefault();
         }
 
+        function subscribeAtDragDropEvents() {
+
+            var shoppingCart = document.getElementById("shoppingCart");
+            shoppingCart.ondragenter = handleDrag;
+            shoppingCart.ondragover = handleDrag;
+            shoppingCart.ondrop = function (e) {
+                
+                var newElem = document.getElementById(draggedID).cloneNode(false);
+
+                var card = { CardId: draggedID };
+
+                /*var json = $.toJSON(card);*/
+
+                $.ajax({
+                    url: '/Cart/Add',
+                    type: 'POST',
+                    data: card,
+                    success: function (data) {
+                        $("aside").replaceWith(data);
+                        subscribeAtDragDropEvents();
+                        // get the result and do some magic with it
+                        /*
+                        newElem.classList.add("cartImg");
+                        var $cart = $("<div class='cartItem'></div>");
+                        $cart.append(newElem);
+                        var $price = $("<br/><h6>Qnty:</h6><span> " + data.Quantity + "</span><br/><h6>Price:</h6><span>" + data.Price + "</span>");
+                        $cart.append($price);
+                        shoppingCart.appendChild($cart[0]);
+                        */
+
+                    }
+                });
+            };
+        }
+
         $(document).ready(function () {
-            $("#categorySection").accordion({ active: false });
+            $("#categorySection").accordion({ active: true });
+
+
+            $('.cardDescription').dialog({
+                modal: false,
+                autoOpen: false,
+                resizable: false
+            });
+
+            $('.cardImg').mouseenter(function (e) {
+                $('.cardDescription').dialog("open");
+                e.preventDefault();
+            });
 
             var src = document.getElementById("categorySection");
             src.ondragstart = function (e) {
@@ -47,42 +121,47 @@
             */
 
             /*var shoppingCart = $('#shoppingCart');*/
-            var shoppingCart = document.getElementById("shoppingCart");
+            /*            var shoppingCart = document.getElementById("shoppingCart");
             shoppingCart.ondragenter = handleDrag;
             shoppingCart.ondragover = handleDrag;
             shoppingCart.ondrop = function (e) {
-                var newElem = document.getElementById(draggedID).cloneNode(false);
+            var newElem = document.getElementById(draggedID).cloneNode(false);
 
-                var card = { CardId: draggedID };
+            var card = { CardId: draggedID };
 
-                /*var json = $.toJSON(card);*/
+            /*var json = $.toJSON(card);#1#
 
-                $.ajax({
-                    url: '/Cart/Add',
-                    type: 'POST',
-                    data: card,
-                    success: function (data) {
-                        // get the result and do some magic with it
-                        newElem.classList.add("cartImg");
-                        var $cart = $("<div class='cartItem'></div>");
-                        $cart.append(newElem);
-                        var $price = $("<br/><h6>Qnty:</h6><span> " + data.Quantity + "</span><br/><h6>Price:</h6><span>" + data.Price + "</span>");
-                        $cart.append($price);
-                        shoppingCart.appendChild($cart[0]);
+            $.ajax({
+            url: '/Cart/Add',
+            type: 'POST',
+            data: card,
+            success: function (data) {
+            $("aside").replaceWith(data);
+            // get the result and do some magic with it
+            /*
+            newElem.classList.add("cartImg");
+            var $cart = $("<div class='cartItem'></div>");
+            $cart.append(newElem);
+            var $price = $("<br/><h6>Qnty:</h6><span> " + data.Quantity + "</span><br/><h6>Price:</h6><span>" + data.Price + "</span>");
+            $cart.append($price);
+            shoppingCart.appendChild($cart[0]);
+            #1#
 
-                    }
-                });
-                /*
-                newElem.classList.add("cartImg");
-                var $cart = $("<div class='cartItem'></div>");
-                $cart.append(newElem);
-                var $price = $("<br/><h6>Qnty:</h6><span> 3</span><br/><h6>Price:</h6><span> 25,70</span>");
-                $cart.append($price);
-                shoppingCart.appendChild($cart[0]);
+            }
+            });
+            /*
+            newElem.classList.add("cartImg");
+            var $cart = $("<div class='cartItem'></div>");
+            $cart.append(newElem);
+            var $price = $("<br/><h6>Qnty:</h6><span> 3</span><br/><h6>Price:</h6><span> 25,70</span>");
+            $cart.append($price);
+            shoppingCart.appendChild($cart[0]);
                 
-                */
-                e.preventDefault();
-            };
+            #1#
+            e.preventDefault();
+            };*/
+
+            subscribeAtDragDropEvents();
         });
 
     </script>

@@ -257,22 +257,29 @@ input[class~="text-box"], select, .editor-input {
         color: white;
         }
         
+        .cartItem{
+            display: inline-block;
+            text-align: center;
+        }
+        
         .cartImg
         {
             height: 100px;
             display: inline-block;
             padding: 0px 0px;
         }
+        
+        .inlineImage {
+            display: inline-block;
+            padding: 0px 0px;
+        }
+        
         #cartBlock{
             text-align: center;
         }
         h6{
             display: inline-block;
             margin: 0px;
-        }
-        .cartItem{
-            display: inline-block;
-            text-align: center;
         }
         
         .table {
@@ -317,6 +324,15 @@ input[class~="text-box"], select, .editor-input {
     
     .inlineDisplay {
         display: inline;
+    }
+    
+    .noItemsInStore {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+
+    .noItemsInStore:hover  {
+        opacity: 0.3;
     }
     
     header {

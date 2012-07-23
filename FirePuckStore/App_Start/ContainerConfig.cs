@@ -26,8 +26,8 @@ namespace FirePuckStore.App_Start
             unityContainer.RegisterType(typeof(ICardService), typeof(CardService), new PerResolveLifetimeManager());
             unityContainer.RegisterType(typeof(ICardRepository), typeof(CardRepository), new PerResolveLifetimeManager());
 
-            unityContainer.RegisterType(typeof (ICartService), typeof (CartService), new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType(typeof (ICartRepository), typeof (CartRepository), new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType(typeof(ICartService), typeof(CartService), new PerResolveLifetimeManager());
+            unityContainer.RegisterType(typeof(ICartRepository), typeof(CartRepository), new PerResolveLifetimeManager());
 
             ControllerBuilder.Current.SetControllerFactory(new InjectControllerFactory(unityContainer));
         }

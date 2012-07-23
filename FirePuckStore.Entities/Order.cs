@@ -1,4 +1,6 @@
-﻿namespace FirePuckStore.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace FirePuckStore.Models
 {
     public class Order
     {
@@ -9,5 +11,8 @@
         public int CardId { get; set; }
 
         public int Quantity { get; set; }
+
+        [NotMapped]
+        public decimal Price { get; set; }
     }
 }

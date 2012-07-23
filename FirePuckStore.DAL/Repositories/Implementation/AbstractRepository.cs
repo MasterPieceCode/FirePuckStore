@@ -6,13 +6,18 @@ using System.Text;
 
 namespace FirePuckStore.DAL.Repositories.Implementation
 {
-    public class AbstractRepository
+    public class AbstractRepository : IDisposable
     {
         protected PuckStoreDbContext DbContext { get; private set; }
 
         protected AbstractRepository()
         {
             DbContext = new PuckStoreDbContext();
+        }
+
+        public void Dispose()
+        {
+            DbContext.Dispose();
         }
     }
 }

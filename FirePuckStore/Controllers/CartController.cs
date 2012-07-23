@@ -7,6 +7,9 @@ using System.Web.Mvc;
 using FirePuckStore.BL.Services.Implementation;
 using FirePuckStore.BL.Services.Interfaces;
 using FirePuckStore.Models;
+using System.Web.Mvc.Html
+;
+
 
 namespace FirePuckStore.Controllers
 {
@@ -32,9 +35,17 @@ namespace FirePuckStore.Controllers
         }
 
         [HttpPost]
-        public JsonResult Add(CartInputModel cartInputModel)
+        public ActionResult Add(CartInputModel cartInputModel)
         {
-            return Json(new {Quantity = 5, Price = 25, Rest = 1});
+            var order = _cartService.Place1QuantityOrderAndReturnSummaryOrderForCard(cartInputModel.CardId);
+            /*return Json(new {order.Quantity, order.Price, Rest = order.Card.Quantity});*/
+            return PartialView("_Cart", _cartService.GetCart());
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _cartService.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

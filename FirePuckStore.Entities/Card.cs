@@ -21,7 +21,7 @@ namespace FirePuckStore.Models
         public string ImageUrl { get; set; }
 
         [Required]
-        [Range(1, 100)]
+        [Range(0, 100)]
         public int Quantity { get; set; }
 
         [DataType(DataType.Currency)]

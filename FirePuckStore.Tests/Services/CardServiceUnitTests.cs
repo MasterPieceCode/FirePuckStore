@@ -58,14 +58,24 @@ namespace FirePuckStore.Tests.Services
         {
             var mockRepository = new Mock<ICardRepository>();
 
-            var expected = TestHelper.CreateRandomCardWithId(TestHelper.CreateRandomId());
+            var expectedCards = new List<Card>()
+                                    {
+                                        TestHelper.CreateRandomCardWithId(TestHelper.CreateRandomNumber(1, 5)),
+                                        TestHelper.CreateRandomCardWithId(TestHelper.CreateRandomNumber(6, 10)),
+                                    };
 
             var fileServiceMock = new Mock<IFileService>();
+
+            mockRepository.Setup(repository => repository.GetAllCardsWithPlayerInfo()).Returns(expectedCards);
             var service = new CardService(mockRepository.Object, fileServiceMock.Object);
 
-            service.Add(expected);
+            var actualCards = service.GetAllCards();
 
-            mockRepository.Verify(cardRepository => cardRepository.AddCard(expected), Times.Once());
+            mockRepository.Verify(cardRepository => cardRepository.GetAllCardsWithPlayerInfo(), Times.Once());
+
+            Assert.Equal(expectedCards.Count, actualCards.Count);
+            Assert.Equal(expectedCards[0], actualCards[0], new CardComparer());
+            Assert.Equal(expectedCards[1], actualCards[1], new CardComparer());
         }
 
         [Fact]

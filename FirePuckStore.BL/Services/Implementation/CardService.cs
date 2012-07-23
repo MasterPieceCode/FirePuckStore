@@ -41,7 +41,7 @@ namespace FirePuckStore.BL.Services.Implementation
 
         public List<Card> GetAllCards()
         {
-            return _cardRepository.GetCardsWithPlayerInfo();
+            return _cardRepository.GetAllCardsWithPlayerInfo();
         }
 
         public void DeleteCard(int cardId)
