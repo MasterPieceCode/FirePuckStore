@@ -5,16 +5,16 @@
         <p id = "cartQuantity">@Model.Count</p>
         <img id="cartIco" src="/Content/Images/Cart.png"/>
         <br/>
-    </div>
+    </div>    
 
-@foreach(var order in Model)
-{
-    <div class="cartItem">
-        <img class = "cartImg" src="@order.Card.ImageUrl"/>
-        <br/>
-        <h6>Qnty:</h6><span> @order.Quantity</span>
-        <br/>
-        <h6>Price:</h6><span> @order.Card.Price</span>
-    </div>
-}
+    @foreach(var order in Model)
+    {
+        <div class="cartItem">
+            <img class = "cartImg" src="@order.Card.ImageUrl"/>
+            <br/>
+            <h6>Qnty:</h6><span> @order.Quantity</span>
+            <br/>
+            <h6>Price:</h6><span> @order.Card.Price</span>
+        </div>
+    }
 </aside>

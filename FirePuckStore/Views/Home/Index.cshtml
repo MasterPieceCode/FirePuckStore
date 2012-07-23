@@ -2,30 +2,88 @@
 @{
     ViewBag.Title = "Store";
 }
-
 @{
     Html.RenderAction("Details", "Cart");
 }
-
 <div id="categorySection" class="ui-accordion ui-widget ui-helper-reset">
     @{
         foreach (var category in Model)
         {
-            <h3><a href="#">@category.Key</a></h3>
-            <div>
-                @foreach (var card in category.Value)
-                {
-                    <img src="@card.ImageUrl" alt="@card.Description"/>
-                }
-            </div>
+        <h3>
+            <a href="#">@category.Key</a></h3>
+        <div>
+            @foreach (var card in category.Value)
+            {
+                <img id = @card.CardId draggable="true" src="@card.ImageUrl" alt="@card.Description"/>
+            }
+        </div>
         }
     }
 </div>
-
 @section Scripts
-{<script type="text/javascript">
-     $(document).ready(function () {
-         $("#categorySection").accordion({ active: false });
-     });
-</script>
+{
+    <script type="text/javascript">
+        var draggedID;
+
+        function handleDrag(e) {
+            e.preventDefault();
+        }
+
+        $(document).ready(function () {
+            $("#categorySection").accordion({ active: false });
+
+            var src = document.getElementById("categorySection");
+            src.ondragstart = function (e) {
+                draggedID = e.target.id;
+                e.target.classList.add("dragged");
+            };
+
+            /*
+            $(".cartImg").each(function() {
+            this.ondragstart = function (e) {
+            alert('dragstart');
+            };
+            });
+            */
+
+            /*var shoppingCart = $('#shoppingCart');*/
+            var shoppingCart = document.getElementById("shoppingCart");
+            shoppingCart.ondragenter = handleDrag;
+            shoppingCart.ondragover = handleDrag;
+            shoppingCart.ondrop = function (e) {
+                var newElem = document.getElementById(draggedID).cloneNode(false);
+
+                var card = { CardId: draggedID };
+
+                /*var json = $.toJSON(card);*/
+
+                $.ajax({
+                    url: '/Cart/Add',
+                    type: 'POST',
+                    data: card,
+                    success: function (data) {
+                        // get the result and do some magic with it
+                        newElem.classList.add("cartImg");
+                        var $cart = $("<div class='cartItem'></div>");
+                        $cart.append(newElem);
+                        var $price = $("<br/><h6>Qnty:</h6><span> " + data.Quantity + "</span><br/><h6>Price:</h6><span>" + data.Price + "</span>");
+                        $cart.append($price);
+                        shoppingCart.appendChild($cart[0]);
+
+                    }
+                });
+                /*
+                newElem.classList.add("cartImg");
+                var $cart = $("<div class='cartItem'></div>");
+                $cart.append(newElem);
+                var $price = $("<br/><h6>Qnty:</h6><span> 3</span><br/><h6>Price:</h6><span> 25,70</span>");
+                $cart.append($price);
+                shoppingCart.appendChild($cart[0]);
+                
+                */
+                e.preventDefault();
+            };
+        });
+
+    </script>
 }
