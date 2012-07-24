@@ -31,6 +31,11 @@ function subscribeAtDragDropEvents() {
             url: '/Cart/Add',
             type: 'POST',
             data: card,
+            error: function (data) {
+                if (data.status = 403) {
+                    alert("You can not add this item because cart was modified by another user");
+                }
+            },
             success: function (data) {
                 $("aside").replaceWith(data);
                 subscribeAtDragDropEvents();
@@ -64,6 +69,12 @@ function subscribeAtCardClickEvent() {
             url: '/Cart/Delete',
             type: 'POST',
             data: card,
+            async: false,
+            error: function (data) {
+                if (data.status = 403) {
+                    alert("You can not delete this item because cart was modified by another user");
+                }
+            },
             success: function (data) {
                 $("aside").replaceWith(data);
                 subscribeAtDragDropEvents();

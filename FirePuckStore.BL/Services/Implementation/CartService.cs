@@ -61,6 +61,10 @@ namespace FirePuckStore.BL.Services.Implementation
             var card = _cardService.GetById(cardId);
 
             var order = _cartRepository.GetOrderForCardId(cardId);
+            if (order == null)
+            {
+                throw new InvalidOperationException("There is no order for this item");
+            }
             --order.Quantity;
             if (order.Quantity > 0)
             {

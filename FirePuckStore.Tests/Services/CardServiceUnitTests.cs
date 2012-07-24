@@ -130,14 +130,14 @@ namespace FirePuckStore.Tests.Services
             var dbCard = TestHelper.CreateRandomCardWithId(cardId);
             dbCard.ImageUrl = TestHelper.CreateRandomString(10);
 
-            mockRepository.Setup(repository => repository.FindCardById(cardId)).Returns(dbCard);
+            mockRepository.Setup(repository => repository.FindCardByIdAsNoTracking(cardId)).Returns(dbCard);
 
             var fileServiceMock = new Mock<IFileService>();
 
             var service = new CardService(mockRepository.Object, fileServiceMock.Object);
             service.Update(expectedCard);
 
-            mockRepository.Verify(repository => repository.FindCardById(cardId), Times.Once());
+            mockRepository.Verify(repository => repository.FindCardByIdAsNoTracking(cardId), Times.Once());
             mockRepository.Verify(cardRepository => cardRepository.UpdateCard(expectedCard), Times.Once());            
             Assert.Equal(expectedCard.ImageUrl, dbCard.ImageUrl);
         }
@@ -154,7 +154,7 @@ namespace FirePuckStore.Tests.Services
 
             var fileServiceMock = new Mock<IFileService>();
 
-            mockRepository.Setup(repository => repository.FindCardById(cardId)).Returns(expectedCard);
+            mockRepository.Setup(repository => repository.FindCardByIdAsNoTracking(cardId)).Returns(expectedCard);
 
             var uploadedFileName = TestHelper.CreateRandomString(5);
             var physicalPath = TestHelper.CreateRandomString(15);
@@ -164,7 +164,7 @@ namespace FirePuckStore.Tests.Services
             var service = new CardService(mockRepository.Object, fileServiceMock.Object);
             service.Update(expectedCard);
 
-            mockRepository.Verify(repository => repository.FindCardById(cardId), Times.Once());
+            mockRepository.Verify(repository => repository.FindCardByIdAsNoTracking(cardId), Times.Once());
             VerifyImageWasUploadedToPhysicalPath(fileServiceMock, physicalPath, expectedCard.ImageUrl, uploadedFileName, postedFileMock);
 
             fileServiceMock.Verify(fileService => fileService.DeleteFileFromServer(expectedCard.ImageUrl), Times.Never());
@@ -183,7 +183,7 @@ namespace FirePuckStore.Tests.Services
             dbCard.ImageUrl = TestHelper.CreateRandomString(15);
             var fileServiceMock = new Mock<IFileService>();
 
-            mockRepository.Setup(repository => repository.FindCardById(cardId)).Returns(dbCard);
+            mockRepository.Setup(repository => repository.FindCardByIdAsNoTracking(cardId)).Returns(dbCard);
 
             var uploadedFileName = TestHelper.CreateRandomString(5);
             var physicalPath = TestHelper.CreateRandomString(15);
@@ -196,7 +196,7 @@ namespace FirePuckStore.Tests.Services
             var service = new CardService(mockRepository.Object, fileServiceMock.Object);
             service.Update(expectedCard);
 
-            mockRepository.Verify(repository => repository.FindCardById(cardId), Times.Once());
+            mockRepository.Verify(repository => repository.FindCardByIdAsNoTracking(cardId), Times.Once());
             fileServiceMock.Verify(fileService => fileService.GetPhysicalPath(null, dbCard.ImageUrl), Times.Once());
             fileServiceMock.Verify(fileService => fileService.DeleteFileFromServer(previousUploadedImagePhysicalPath), Times.Once());
             VerifyImageWasUploadedToPhysicalPath(fileServiceMock, physicalPath, expectedCard.ImageUrl, uploadedFileName, postedFileMock);
