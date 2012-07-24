@@ -34,6 +34,11 @@ namespace FirePuckStore.Models
         [NotMapped]
         public HttpPostedFileBase FileInput { get; set; }
 
+        public Card()
+        {
+            ImageUrl = "/Content/images/noImageProvided.jpg";
+        }
+
         public Card Clone()
         {
             var cloneable = (ICloneable)this;

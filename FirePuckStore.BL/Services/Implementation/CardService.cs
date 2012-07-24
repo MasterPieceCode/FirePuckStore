@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -63,6 +64,11 @@ namespace FirePuckStore.BL.Services.Implementation
 
         private void DeleteUploadedImageFromServer(string imageUrl)
         {
+            if (imageUrl.Equals( "/Content/images/noImageProvided.jpg", StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
             _fileService.DeleteFileFromServer(_fileService.GetPhysicalPath(HttpContext.Current, imageUrl));
         }
 
@@ -77,7 +83,6 @@ namespace FirePuckStore.BL.Services.Implementation
             {
                 card.ImageUrl = UploadImage(card.FileInput);
             }
-
             _cardRepository.AddCard(card);
         }
 

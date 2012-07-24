@@ -35,7 +35,7 @@ namespace FirePuckStore.Controllers
         public ActionResult Create()
         {
             ViewBag.PlayerIdList = new SelectList(db.Players, "PlayerId", "FullName");
-            return View();
+            return View(new Card());
         }
 
         //

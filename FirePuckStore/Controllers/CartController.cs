@@ -46,7 +46,6 @@ namespace FirePuckStore.Controllers
         public ActionResult Delete(CartInputModel cartInputModel)
         {
             _cartService.UnPlace1QuantityOrderAndReturnSummaryOrderForCard(cartInputModel.CardId);
-            /*return Json(new {order.Quantity, order.Price, Rest = order.Card.Quantity});*/
             return PartialView("_Cart", _cartService.GetCart());
         }
 

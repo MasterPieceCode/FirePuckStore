@@ -1,20 +1,25 @@
 ﻿@model List<FirePuckStore.Models.Order>
 
+@helper ClassName()
+{    
+    @(Model.Count > 0 ? "active" : "inActive")
+}
+
 <aside id="shoppingCart">
     <div id="cartBlock">
-        <p id = "cartQuantity">@Model.Count</p>
-        <img id="cartIco" src="/Content/Images/Cart.png"/>
+        <p id = "cartQuantity"  class = @ClassName() >@Model.Count</p>
+        <img id="cartIco" class = @ClassName() src="/Content/Images/Cart.png"/>
         <br/>
     </div>    
-
     @foreach(var order in Model)
     {
         <div class="cartItem">
-            <img class = "cartImg" ordercardid = "@order.Card.CardId" draggable="false"  src="@order.Card.ImageUrl"/>
+            <img class = "cartImg" title="@order.Card.Description" alt="@order.Card.Description" ordercardid = "@order.Card.CardId" draggable="false"  src="@order.Card.ImageUrl"/>
             <br/>
             <h6>Qnty:</h6><span class="pricequantity"> @order.Quantity</span>
             <br/>
             <h6>Price:</h6><span class="pricelabel"> @order.Price</span>
         </div>
     }
+    <footer title="Drop">Drop Card Here</footer>
 </aside>

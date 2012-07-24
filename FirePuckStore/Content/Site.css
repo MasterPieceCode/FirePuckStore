@@ -222,28 +222,27 @@ input[class~="text-box"], select, .editor-input {
 
         #shoppingCart{
             background-color:#585858;
-            
-            width:25%;
-            padding:0px 8% 0px 1%;   
-            min-height: 100%;
-            max-height: 3000px;
-            vertical-align: bottom;
+            display: inline-block;
+            width:33%;
+            padding:0px 0% 0px 1%;
+            top: 20%;
             position: fixed;
+            vertical-align: bottom;
+            max-height: 70%;
+            height: 1000px;
             margin-left: 64%;
+            overflow-y: auto;
         }
         
         #cartIco{
-            cursor: pointer;
             background-color: #585858;
-            opacity: .5;
             display: inline-block;
         }
-
-        #cartIco:hover{
-            cursor: pointer;
-            background-color: #585858;
-            opacity: 1;
+        
+        .inActive {
+            opacity: 0.5;
         }
+
         #cartQuantity{
         display: inline-block;
         left: 70px;
@@ -252,7 +251,6 @@ input[class~="text-box"], select, .editor-input {
         padding: 3px 5px 3px 5px;
         border-radius: 10px;
         z-index: 1;
-        opacity: .5;
         font-size: small;
         color: white;
         }
@@ -272,6 +270,10 @@ input[class~="text-box"], select, .editor-input {
         }
         
         .cartImg:hover {
+            opacity: 1;
+        }
+        
+        .active {
             opacity: 1;
         }
         
@@ -344,4 +346,8 @@ input[class~="text-box"], select, .editor-input {
     header {
         margin-bottom: 20px;
         display: block;
+    }
+    
+    footer {
+         text-align: center; text-shadow: 5px 5px 5px grey; font-size: x-large;color: ghostwhite;
     }
