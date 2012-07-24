@@ -28,12 +28,13 @@ namespace FirePuckStore.BL.Services.Implementation
 
         private void CalculateTotalPriceForOrder(Order order)
         {
-            order.Price = order.Card.Price*order.Quantity;
+            order.Price = order.Card.Price * order.Quantity;
         }
 
         public Order Place1QuantityOrderAndReturnSummaryOrderForCard(int cardId)
         {
             var card = _cardService.GetById(cardId);
+
             if (card.Quantity == 0)
             {
                 throw new InvalidOperationException("You can not add item to card due to missing this card available for selling");
@@ -52,7 +53,7 @@ namespace FirePuckStore.BL.Services.Implementation
             }
             order.Card = card;
             CalculateTotalPriceForOrder(order);
-            ReduceAmountBy1QuantityForCardInStore(card);
+            ChangeQuantityForCardInStore(card, -1);
             return order;
         }
 
@@ -65,9 +66,11 @@ namespace FirePuckStore.BL.Services.Implementation
             {
                 throw new InvalidOperationException("There is no order for this item");
             }
-            --order.Quantity;
-            if (order.Quantity > 0)
+
+            if (order.Quantity > 1)
             {
+                --order.Quantity;
+
                 _cartRepository.UpdateOrder(order);
             }
             else
@@ -77,19 +80,13 @@ namespace FirePuckStore.BL.Services.Implementation
 
             order.Card = card;
             CalculateTotalPriceForOrder(order);
-            IncreaseAmountBy1QuantityForCardInStore(card);
+            ChangeQuantityForCardInStore(card, 1);
             return order;
         }
 
-        private void ReduceAmountBy1QuantityForCardInStore(Card card)
+        private void ChangeQuantityForCardInStore(Card card, int quantity)
         {
-            --card.Quantity;
-            _cardService.Update(card);
-        }
-
-        private void IncreaseAmountBy1QuantityForCardInStore(Card card)
-        {
-            ++card.Quantity;
+            card.Quantity += quantity;
             _cardService.Update(card);
         }
 

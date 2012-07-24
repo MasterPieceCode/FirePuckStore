@@ -11,20 +11,20 @@ namespace FirePuckStore.DAL
         {
             var leagues = new List<League>
                               {
-                                  new League {Name = "NHL", Description = "The best league in the North Americe"},
-                                  new League {Name = "KHL", Description = "The best league in the Europe"}
+                                  new League {Name = "NHL", Description = "The best league in the North Americe", LogoPath = "/Content/images/nhl-logo.png", WebSite = "http://nhl.com"},
+                                  new League {Name = "KHL", Description = "The best league in the Europe", LogoPath = "/Content/images/khl-logo.png", WebSite = "http://en.khl.ru"}
                               };
 
             leagues.ForEach(l => context.Leagues.Add(l));
 
             var players = new List<Player>
                               {
-                                  new Player{FullName = "Alex Ovechkin", League = leagues.Single(x => x.Name == "NHL")},
+                                  new Player{FullName = "Alex Ovechkin", League = leagues.Single(x => x.Name == "NHL"), ImageUrl = "/Content/images/ovechkin-logo.jpg"},
 
-                                  new Player{FullName = "Evgeny Malkin", League = leagues.Single(x => x.Name == "NHL")},
-                                  new Player{FullName = "Pavel Datsyk", League = leagues.Single(x => x.Name == "NHL")},
-                                  new Player{FullName = "Alex Morozov", League = leagues.Single(x => x.Name == "KHL")},
-                                  new Player{FullName = "Branko Radivoevich",League = leagues.Single(x => x.Name == "KHL")},
+                                  new Player{FullName = "Evgeny Malkin", League = leagues.Single(x => x.Name == "NHL"), ImageUrl = "/Content/images/malkin-logo.jpg"},
+                                  new Player{FullName = "Pavel Datsyk", League = leagues.Single(x => x.Name == "NHL"),  ImageUrl = "/Content/images/datsyk-logo.jpg"},
+                                  new Player{FullName = "Alex Morozov", League = leagues.Single(x => x.Name == "KHL"), ImageUrl = "/Content/images/morozov-logo.jpg"},
+                                  new Player{FullName = "Branko Radivoevich",League = leagues.Single(x => x.Name == "KHL"), ImageUrl = "/Content/images/radivoevich-logo.jpg"},
 
                               };
             players.ForEach(p => context.Players.Add(p));

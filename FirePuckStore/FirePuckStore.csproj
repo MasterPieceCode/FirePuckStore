@@ -138,6 +138,7 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InjectControllerFactory.cs" />
+    <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -151,21 +152,26 @@
     <Content Include="Content\images\camera.png" />
     <Content Include="Content\images\cart.jpg" />
     <Content Include="Content\images\cart.png" />
+    <Content Include="Content\images\datsyk-logo.jpg" />
     <Content Include="Content\images\datsyk1.jpg" />
     <Content Include="Content\images\datsyk2.jpg" />
     <Content Include="Content\images\datsyk3.jpg" />
     <Content Include="Content\images\favicon.ico" />
     <Content Include="Content\images\fileUpload.jpg" />
     <Content Include="Content\images\ICON.ico" />
+    <Content Include="Content\images\malkin-logo.jpg" />
     <Content Include="Content\images\malkin1.jpg" />
     <Content Include="Content\images\malkin2.jpg" />
+    <Content Include="Content\images\morozov-logo.jpg" />
     <Content Include="Content\images\morozov1.jpg" />
     <Content Include="Content\images\noImageProvided.jpg" />
+    <Content Include="Content\images\ovechkin-logo.jpg" />
     <Content Include="Content\images\ovechkin1.jpg" />
     <Content Include="Content\images\ovechkin2.jpg" />
     <Content Include="Content\images\ovechkin3.jpg" />
     <Content Include="Content\images\puck.ico" />
     <Content Include="Content\images\puck.jpg" />
+    <Content Include="Content\images\radivoevich-logo.jpg" />
     <Content Include="Content\images\radivoevich1.jpg" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -227,6 +233,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\cart.js" />
+    <Content Include="Scripts\deletedialog.js" />
     <Content Include="Scripts\ui.imageselector.js" />
     <Content Include="Scripts\jquery-1.6.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.7.2.min.js" />
@@ -299,6 +306,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_ImageUploader.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Player\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Player\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Player\Create.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

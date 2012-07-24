@@ -29,6 +29,9 @@ namespace FirePuckStore.App_Start
             unityContainer.RegisterType(typeof(ICartService), typeof(CartService), new PerResolveLifetimeManager());
             unityContainer.RegisterType(typeof(ICartRepository), typeof(CartRepository), new PerResolveLifetimeManager());
 
+            unityContainer.RegisterType(typeof(IPlayerService), typeof(PlayerService), new PerResolveLifetimeManager());
+            unityContainer.RegisterType(typeof(IPlayerRepository), typeof(PlayerRepository), new PerResolveLifetimeManager());
+
             ControllerBuilder.Current.SetControllerFactory(new InjectControllerFactory(unityContainer));
         }
     }

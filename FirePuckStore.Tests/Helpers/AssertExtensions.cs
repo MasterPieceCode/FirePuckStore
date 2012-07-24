@@ -18,6 +18,12 @@ namespace FirePuckStore.Tests.Helpers
             Assert.IsAssignableFrom<TModel>(viewResult.Model);
         }
 
+        public static void WithNameHasModel<TModel>(this ViewResultBase viewResult, string viewName, TModel model)
+        {
+            WithNameHasModelType<TModel>(viewResult, viewName);
+            Assert.Equal((TModel)viewResult.Model, model);
+        }
+
         public static void ContainsCard(this IEnumerable<Card> cards, Card card)
         {
             Assert.Contains(card, cards, new CardComparer());

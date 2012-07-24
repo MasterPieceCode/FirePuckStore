@@ -67,7 +67,11 @@ namespace FirePuckStore.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            _cartService.Dispose();
+            if (disposing)
+            {
+                _cartService.Dispose();
+            }
+
             base.Dispose(disposing);
         }
     }

@@ -22,12 +22,12 @@ namespace FirePuckStore.Tests.Controllers
             var expected = TestHelper.Create2RandomCardsWithDifferentCategories();
 
             var cardServiceMock = new Mock<ICardService>();
-            cardServiceMock.Setup(x => x.GetAllCards()).Returns(expected);
+            cardServiceMock.Setup(x => x.GetAll()).Returns(expected);
 
             var controller = new CardController(cardServiceMock.Object);
             var actual = controller.Index() as ViewResult;
 
-            cardServiceMock.Verify(x => x.GetAllCards(), Times.Once());
+            cardServiceMock.Verify(x => x.GetAll(), Times.Once());
 
             Assert.NotNull(actual);
             actual.WithNameHasModelType<IList<Card>>(string.Empty);
@@ -49,7 +49,7 @@ namespace FirePuckStore.Tests.Controllers
 
             var actual = controller.DeleteConfirmed(cardId);
 
-            cardServiceMock.Verify(service => service.DeleteCard(cardId), Times.Once());
+            cardServiceMock.Verify(service => service.Delete(cardId), Times.Once());
 
             actual.ShouldBeRedirectionTo(new { action = "Index" });
         }

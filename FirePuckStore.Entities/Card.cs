@@ -5,7 +5,7 @@ using System.Web;
 
 namespace FirePuckStore.Models
 {
-    public class Card : ICloneable
+    public class Card : ICloneable, IFileUploadable
     {
         public int CardId { get; set; }
 
@@ -18,8 +18,6 @@ namespace FirePuckStore.Models
         [Required(ErrorMessage = "The Player field is required")]
         public int PlayerId { get; set; }
 
-        public string ImageUrl { get; set; }
-
         [Required]
         [Range(0, 100)]
         public int Quantity { get; set; }
@@ -31,12 +29,14 @@ namespace FirePuckStore.Models
 
         public virtual Player Player { get; set; }
 
+        public string ImageUrl { get; set; }
+
         [NotMapped]
         public HttpPostedFileBase FileInput { get; set; }
 
         public Card()
         {
-            ImageUrl = "/Content/images/noImageProvided.jpg";
+            ImageUrl = Constants.DefaultmageServerPath;
         }
 
         public Card Clone()

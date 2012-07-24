@@ -11,7 +11,7 @@ namespace FirePuckStore.DAL.Repositories.Implementation
 {
     public class CardRepository : AbstractRepository, ICardRepository
     {
-        public List<Card> GetCards()
+        public List<Card> GetAll()
         {
             return DbContext.Cards.ToList();
         }
@@ -21,29 +21,36 @@ namespace FirePuckStore.DAL.Repositories.Implementation
             return DbContext.Cards.Include(c => c.Player).ToList();
         }
 
-        public Card FindCardById(int cardId)
+        public Card GetById(int cardId)
         {
             return DbContext.Cards.Find(cardId);
         }
 
-        public Card FindCardByIdAsNoTracking(int cardId)
+        public void Delete(int entityId)
         {
-            return DbContext.Cards.Where(c => c.CardId == cardId).AsNoTracking().FirstOrDefault();
+            var card = DbContext.Cards.Find(entityId); 
+            DbContext.Cards.Remove(card);
+            DbContext.SaveChanges();
         }
 
-        public void DeleteCard(Card card)
+        public Card GetByIdAsNoTracking(int playerId)
+        {
+            return DbContext.Cards.Where(c => c.CardId == playerId).AsNoTracking().FirstOrDefault();
+        }
+
+        public void Delete(Card card)
         {
             DbContext.Cards.Remove(card);
             DbContext.SaveChanges();
         }
 
-        public void AddCard(Card card)
+        public void Add(Card card)
         {
             DbContext.Cards.Add(card);
             DbContext.SaveChanges();
         }
 
-        public void UpdateCard(Card card)
+        public void Update(Card card)
         {
             DbContext.Entry(card).State = EntityState.Modified;
             DbContext.SaveChanges();

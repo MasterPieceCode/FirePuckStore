@@ -1,0 +1,64 @@
+﻿@model IEnumerable<FirePuckStore.Models.Player>
+
+@{
+    ViewBag.Title = "Players";
+}
+
+<header>
+    <p class="inlineDisplay">Here you can see all the players! Just click</p><span> @Html.ActionLink("here", "Create", new object(), new { id = "inlineDisplay" })</span> <p class="inlineDisplay">to add a new player!</p>
+</header>
+@foreach (var item in Model)
+{
+    <div id="viewCard">
+        <img class="cardImg" src="@item.ImageUrl"/>
+        <div class="table">
+            <div class="row">
+                <p>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </p>
+                <p>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </p>
+            </div>
+            <div class="row">
+                <p>
+                    @Html.DisplayNameFor(model => model.League.Name)
+                </p>
+                <p>
+                    <a href="@item.League.WebSite">
+                        <img src="@item.League.LogoPath" style="height:  48px; display: inline-block; top: 10px; position: relative">                    
+                    </a>
+                    @Html.DisplayFor(modelItem => item.League.Name)
+                </p>
+               
+            </div>
+            <div class="row">
+                <p>
+                    @Html.DisplayNameFor(model => model.Description)
+                </p>
+                <p>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </p>
+            </div>
+        </div>
+        <div class="cardAction">
+            @Html.ActionLink("Edit", "Edit", new { id = item.PlayerId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.PlayerId }, new { @class = "deleteCard" })
+        </div>
+    </div>
+}
+<div id="dialog" title="Confirm">
+    Are you sure you want to delete the card?
+    <form id="confirm" method="post">
+        <p>
+            <input id ="OKButton" type="submit" value="OK" tabindex="1" />
+            <button id="cancelButton" tabindex="0">Cancel</button>
+        </p>
+    </form>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript" src="~/Scripts/deletedialog.js"></script>
+}
+

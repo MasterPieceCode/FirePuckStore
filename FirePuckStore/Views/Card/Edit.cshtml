@@ -1,10 +1,13 @@
 ﻿@model FirePuckStore.Models.Card
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Card";
 }
 
-<h2>Edit</h2>
+<header>
+    <p class="inlineDisplay">Here you can edit created card. You can change any field and image as well!</p>
+</header>
+
 
 @using (Html.BeginForm("Edit", "Card", FormMethod.Post, new { enctype = "multipart/form-data" })) {
     @Html.ValidationSummary(true)
@@ -14,7 +17,7 @@
 
         @Html.HiddenFor(model => model.CardId)
 
-         @Html.Partial("_ImageUploader", Model)
+         @Html.Partial("_ImageUploader", Model.ImageUrl)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Category)

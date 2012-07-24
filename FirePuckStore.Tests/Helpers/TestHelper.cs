@@ -38,9 +38,9 @@ namespace FirePuckStore.Tests
             return result;
         }
 
-        public static List<Order> GetRandomOrders()
+        public static List<Order> Get2RandomOrders()
         {
-            return new List<Order>() {new Order(), new Order()};
+            return new List<Order>() { new Order { OrderId = CreateRandomNumber(1, 5) }, new Order { OrderId = CreateRandomNumber(6, 10) } };
         }
 
         public static List<Card> Create2RandomCardsWithDifferentCategories()
@@ -54,7 +54,7 @@ namespace FirePuckStore.Tests
 
         public static Card CreateRandomCardWithId(int cardId)
         {
-            return new Card { CardId = cardId, Category = CreateRandomString(10), Quantity = CreateRandomNumber(1, 20) };
+            return new Card { CardId = cardId, Category = CreateRandomString(10), Quantity = CreateRandomNumber(1, 20), Price = CreateRandomNumber(10, 1000)};
         }
 
         public static Player CreateRandomPlayerWithId(int playerId)

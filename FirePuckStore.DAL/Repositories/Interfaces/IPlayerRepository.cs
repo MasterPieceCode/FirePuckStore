@@ -6,8 +6,8 @@ using FirePuckStore.Models;
 
 namespace FirePuckStore.DAL.Repositories.Interfaces
 {
-    public interface ICardRepository : IGenericRepository<Card>
+    public interface IPlayerRepository : IGenericRepository<Player>
     {
-        List<Card> GetAllCardsWithPlayerInfo();
+        List<League> GetLeagues();
     }
 }

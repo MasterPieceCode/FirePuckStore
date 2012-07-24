@@ -50,8 +50,11 @@
     <Compile Include="Repositories\Implementation\AbstractRepository.cs" />
     <Compile Include="Repositories\Implementation\CardRepository.cs" />
     <Compile Include="Repositories\Implementation\CartRepository.cs" />
+    <Compile Include="Repositories\Implementation\PlayerRepository.cs" />
     <Compile Include="Repositories\Interfaces\ICardRepository.cs" />
     <Compile Include="Repositories\Interfaces\ICartRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IGenericRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IPlayerRepository.cs" />
     <Compile Include="SampleDataInitializer.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -23,7 +23,8 @@
                     @Html.DisplayNameFor(model => model.Player.FullName)
                 </p>
                 <p>
-                    @Html.DisplayFor(modelItem => item.Player.FullName)
+                    @Html.ActionLink(item.Player.FullName, "Edit", "Player", new { id = item.PlayerId }, null)
+
                 </p>
             </div>
             <div class="row">
@@ -61,26 +62,5 @@
 
 @section Scripts
 {
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#dialog').dialog({
-                modal: true,
-                autoOpen: false,
-                resizable : false
-            });
-
-            $('#cancelButton').click(function (e) {
-                $('#dialog').dialog("close");
-                e.preventDefault();
-            });
-
-            $('.deleteCard').click(function (e) {
-                $('#confirm').attr('action', e.target.href);
-                $('#dialog').dialog("open");
-                e.preventDefault();
-            });
-
-            $("input:submit, #cancelButton").button();
-        });
-    </script>
+    <script type="text/javascript" src="~/Scripts/deletedialog.js"></script>
 }

@@ -1,9 +1,9 @@
-﻿@model FirePuckStore.Models.Card
+﻿@model string
 
         <div class="editor-image">
             <span id='uploadLabel'>Click here to upload logo</span>
 
-            <img id="logo" src="@(Model != null ? Model.ImageUrl : string.Empty)" style="visibility: hidden"></img>
+            <img id="logo" src="@Model" style="visibility: hidden"></img>
 
             <input id="FileInput" name ="FileInput" type="file" @*accept="image/jpeg,image/gif,image/x-png" *@onchange="handleFiles(this.files)" />
         </div>

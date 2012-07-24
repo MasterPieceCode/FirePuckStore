@@ -45,9 +45,13 @@
     <Compile Include="Services\Implementation\CardService.cs" />
     <Compile Include="Services\Implementation\CartService.cs" />
     <Compile Include="Services\Implementation\FileService.cs" />
+    <Compile Include="Services\Implementation\GenericService.cs" />
+    <Compile Include="Services\Implementation\IGenericService.cs" />
+    <Compile Include="Services\Implementation\PlayerService.cs" />
     <Compile Include="Services\Interfaces\ICardService.cs" />
     <Compile Include="Services\Interfaces\ICartService.cs" />
     <Compile Include="Services\Interfaces\IFileService.cs" />
+    <Compile Include="Services\Interfaces\IPlayerService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FirePuckStore.DAL\FirePuckStore.DAL.csproj">

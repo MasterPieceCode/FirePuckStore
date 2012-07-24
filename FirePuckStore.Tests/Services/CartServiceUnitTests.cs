@@ -57,7 +57,7 @@ namespace FirePuckStore.Tests.Services
         }
 
         [Fact]
-        public void TestPlaceOrderForCardIdIfNoExists()
+        public void TestPlace1ItemForCardIdIfOrderNoExists()
         {
             var mockRepositroy = new Mock<ICartRepository>();
 
@@ -73,7 +73,7 @@ namespace FirePuckStore.Tests.Services
 
             var actualOrder = cartService.Place1QuantityOrderAndReturnSummaryOrderForCard(cardId);
 
-            VerifyCheckingOfExistanceOrderForSpecifiedCardInvokations(mockRepositroy, mockCardService, cardId);
+            VerifyCheckingOfExistanceOrderForSpecifiedCard(mockRepositroy, mockCardService, cardId);
 
             Assert.Equal(1, actualOrder.Quantity);
             Assert.Equal(CalculatePriceForOrder(actualOrder), actualOrder.Price);
@@ -81,20 +81,8 @@ namespace FirePuckStore.Tests.Services
         }
 
 
-        private static void SetupCheckingOfExistanceOrderForSpecifiedCard(Mock<ICartRepository> mockRepositroy, Order order, Mock<ICardService> mockCardService, Card dbCard, int cardId)
-        {
-            mockCardService.Setup(cardService => cardService.GetById(cardId)).Returns(dbCard);
-            mockRepositroy.Setup(repository => repository.GetOrderForCardId(cardId)).Returns(order);
-        }
-
-        private static void VerifyCheckingOfExistanceOrderForSpecifiedCardInvokations(Mock<ICartRepository> mockRepositroy, Mock<ICardService> mockCardService, int cardId)
-        {
-            mockCardService.Verify(cardService => cardService.GetById(cardId));
-            mockRepositroy.Verify(repository => repository.GetOrderForCardId(cardId), Times.Once());
-        }
-
         [Fact]
-        public void TestPlacingOrderUpdatingForCardIdIfExists()
+        public void TestPlace1ItemForCardIdIfOrderExists()
         {
             var mockRepositroy = new Mock<ICartRepository>();
 
@@ -111,7 +99,7 @@ namespace FirePuckStore.Tests.Services
 
             var actualOrder = cartService.Place1QuantityOrderAndReturnSummaryOrderForCard(cardId);
 
-            VerifyCheckingOfExistanceOrderForSpecifiedCardInvokations(mockRepositroy, mockCardService, cardId);
+            VerifyCheckingOfExistanceOrderForSpecifiedCard(mockRepositroy, mockCardService, cardId);
             mockRepositroy.Verify(repository => repository.UpdateOrder(expectedOrder), Times.Once());
 
             Assert.Equal(expectedOrder, actualOrder, new OrderComparer());
@@ -120,8 +108,95 @@ namespace FirePuckStore.Tests.Services
             Assert.Equal(--initailQuantityInStore, dbCard.Quantity);
         }
 
+
         [Fact]
-        public void TestPlacingOrderThrowExceptionIfNoCardsInStore()
+        public void TestUnPlace1ItemForExistingOrderForCardIdIfQuantityMoreThanZero()
+        {
+            var mockRepositroy = new Mock<ICartRepository>();
+
+            var cardId = TestHelper.CreateRandomNumber(1, 10);
+            var expectedOrder = TestHelper.CreateRandomOrderForCardId(cardId);
+            var dbCard = TestHelper.CreateRandomCardWithId(cardId);
+            var initailQuantityInStore = dbCard.Quantity;
+            var initailQuantityInOrder = expectedOrder.Quantity;
+            var mockCardService = new Mock<ICardService>();
+
+            SetupCheckingOfExistanceOrderForSpecifiedCard(mockRepositroy, expectedOrder, mockCardService, dbCard, cardId);
+
+            var cartService = new CartService(mockRepositroy.Object, mockCardService.Object);
+
+            var actualOrder = cartService.UnPlace1QuantityOrderAndReturnSummaryOrderForCard(cardId);
+
+            VerifyCheckingOfExistanceOrderForSpecifiedCard(mockRepositroy, mockCardService, cardId);
+            mockRepositroy.Verify(repository => repository.UpdateOrder(expectedOrder), Times.Once());
+
+            Assert.Equal(expectedOrder, actualOrder, new OrderComparer());
+            Assert.Equal(CalculatePriceForOrder(expectedOrder), actualOrder.Price);
+            Assert.Equal(--initailQuantityInOrder, expectedOrder.Quantity);
+            Assert.Equal(++initailQuantityInStore, dbCard.Quantity);
+        }
+
+        [Fact]
+        public void TestUnPlace1ItemForExistingOrderForCardIdIfQuantityIsZero()
+        {
+            var mockRepositroy = new Mock<ICartRepository>();
+
+            var cardId = TestHelper.CreateRandomNumber(1, 10);
+            var expectedOrder = TestHelper.CreateRandomOrderForCardId(cardId);
+            expectedOrder.Quantity = 0;
+            var dbCard = TestHelper.CreateRandomCardWithId(cardId);
+            var initailQuantityInStore = dbCard.Quantity;
+            var mockCardService = new Mock<ICardService>();
+
+            SetupCheckingOfExistanceOrderForSpecifiedCard(mockRepositroy, expectedOrder, mockCardService, dbCard, cardId);
+
+            var cartService = new CartService(mockRepositroy.Object, mockCardService.Object);
+
+            var actualOrder = cartService.UnPlace1QuantityOrderAndReturnSummaryOrderForCard(cardId);
+
+            VerifyCheckingOfExistanceOrderForSpecifiedCard(mockRepositroy, mockCardService, cardId);
+            mockRepositroy.Verify(repository => repository.DeleteOrder(expectedOrder.OrderId), Times.Once());
+            mockRepositroy.Verify(repository => repository.UpdateOrder(expectedOrder), Times.Never());
+
+            Assert.Equal(expectedOrder, actualOrder, new OrderComparer());
+            Assert.Equal(0, actualOrder.Price);
+            Assert.Equal(0, expectedOrder.Quantity);
+            Assert.Equal(++initailQuantityInStore, dbCard.Quantity);
+        }
+
+        [Fact]
+        public void TestUnPlace1ItemThrowExceptionIfOrderNotExists()
+        {
+            var mockRepositroy = new Mock<ICartRepository>(MockBehavior.Strict);
+
+            var cardId = TestHelper.CreateRandomNumber(1, 10);
+            Order expectedOrder = null;
+            var dbCard = TestHelper.CreateRandomCardWithId(cardId);
+            var mockCardService = new Mock<ICardService>();
+
+            SetupCheckingOfExistanceOrderForSpecifiedCard(mockRepositroy, expectedOrder, mockCardService, dbCard, cardId);
+
+            var cartService = new CartService(mockRepositroy.Object, mockCardService.Object);
+
+            Assert.Throws<InvalidOperationException>(() => cartService.UnPlace1QuantityOrderAndReturnSummaryOrderForCard(cardId));
+
+            VerifyCheckingOfExistanceOrderForSpecifiedCard(mockRepositroy, mockCardService, cardId);
+        }
+
+        private static void SetupCheckingOfExistanceOrderForSpecifiedCard(Mock<ICartRepository> mockRepositroy, Order order, Mock<ICardService> mockCardService, Card dbCard, int cardId)
+        {
+            mockCardService.Setup(cardService => cardService.GetById(cardId)).Returns(dbCard);
+            mockRepositroy.Setup(repository => repository.GetOrderForCardId(cardId)).Returns(order);
+        }
+
+        private static void VerifyCheckingOfExistanceOrderForSpecifiedCard(Mock<ICartRepository> mockRepositroy, Mock<ICardService> mockCardService, int cardId)
+        {
+            mockCardService.Verify(cardService => cardService.GetById(cardId));
+            mockRepositroy.Verify(repository => repository.GetOrderForCardId(cardId), Times.Once());
+        }
+
+        [Fact]
+        public void TestPlacing1ItemThrowExceptionIfNoCardsInStoreForThisItem()
         {
             var mockRepositroy = new Mock<ICartRepository>();
 
@@ -139,18 +214,18 @@ namespace FirePuckStore.Tests.Services
 
             mockCardService.Verify(cardService => cardService.GetById(cardId));
         }
+    }
 
-        class OrderComparer : IEqualityComparer<Order>
+    class OrderComparer : IEqualityComparer<Order>
+    {
+        public bool Equals(Order x, Order y)
         {
-            public bool Equals(Order x, Order y)
-            {
-                return x.OrderId.Equals(y.OrderId);
-            }
+            return x.OrderId.Equals(y.OrderId);
+        }
 
-            public int GetHashCode(Order obj)
-            {
-                return obj.OrderId.GetHashCode();
-            }
+        public int GetHashCode(Order obj)
+        {
+            return obj.OrderId.GetHashCode();
         }
     }
 }

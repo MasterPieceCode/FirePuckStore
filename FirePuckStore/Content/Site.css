@@ -111,7 +111,7 @@ input[class~="text-box"], select, .editor-input {
         }
         
         header nav{
-            width: 70%;
+            width: 1000px;
             margin-bottom: 50px;
             display: block;
             max-width: 1900px;

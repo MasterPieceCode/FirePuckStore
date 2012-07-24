@@ -27,7 +27,7 @@ namespace FirePuckStore.Controllers
 
         public ActionResult Index()
         {
-            return View(_cardService.GetAllCards());
+            return View(_cardService.GetAll());
         }
 
         // GET: /Card/Create
@@ -92,7 +92,7 @@ namespace FirePuckStore.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            _cardService.DeleteCard(id);
+            _cardService.Delete(id);
             return RedirectToAction("Index");
         }
 

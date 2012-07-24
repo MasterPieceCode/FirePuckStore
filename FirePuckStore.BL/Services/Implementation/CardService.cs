@@ -10,23 +10,19 @@ using FirePuckStore.Models;
 
 namespace FirePuckStore.BL.Services.Implementation
 {
-    public class CardService : ICardService
+    public class CardService : GenericService<Card>, ICardService
     {
         private readonly ICardRepository _cardRepository;
-        private readonly IFileService _fileService;
         private const int MixedCardsCount = 5;
 
-        public static string CardImagesServerPath = "/Content/Cards/Images/";
-
-        public CardService(ICardRepository cardRepository, IFileService fileService)
+        public CardService(ICardRepository cardRepository, IFileService fileService) : base(cardRepository, fileService)
         {
             _cardRepository = cardRepository;
-            _fileService = fileService;
         }
 
         public IDictionary<string, List<Card>> GetOrderedByLeagueWithMixedCards()
         {
-            var cards = _cardRepository.GetCards().ToList();
+            var cards = Repository.GetAll().ToList();
 
             var result = new Dictionary<string, List<Card>>{{"Mixed", new List<Card>()}};
 
@@ -40,77 +36,10 @@ namespace FirePuckStore.BL.Services.Implementation
             return result;
         }
 
-        public List<Card> GetAllCards()
+        
+        public override  List<Card> GetAll()
         {
             return _cardRepository.GetAllCardsWithPlayerInfo();
-        }
-
-        public void DeleteCard(int cardId)
-        {
-            var card = _cardRepository.FindCardById(cardId);
-
-            if (card == null)
-            {
-                throw new KeyNotFoundException(string.Format("Card with id {0} not found", cardId));
-            }
-
-            if (!string.IsNullOrEmpty(card.ImageUrl))
-            {
-                DeleteUploadedImageFromServer(card.ImageUrl);
-            }
-
-            _cardRepository.DeleteCard(card);
-        }
-
-        private void DeleteUploadedImageFromServer(string imageUrl)
-        {
-            if (imageUrl.Equals( "/Content/images/noImageProvided.jpg", StringComparison.OrdinalIgnoreCase))
-            {
-                return;
-            }
-
-            _fileService.DeleteFileFromServer(_fileService.GetPhysicalPath(HttpContext.Current, imageUrl));
-        }
-
-        public Card GetById(int cardId)
-        {
-            return _cardRepository.FindCardById(cardId);
-        }
-
-        public void Add(Card card)
-        {
-            if (card.FileInput != null)
-            {
-                card.ImageUrl = UploadImage(card.FileInput);
-            }
-            _cardRepository.AddCard(card);
-        }
-
-        public void Update(Card card)
-        {
-            var dbCard = _cardRepository.FindCardByIdAsNoTracking(card.CardId);
-
-            if (card.FileInput == null)
-            {
-                card.ImageUrl = dbCard.ImageUrl;
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(dbCard.ImageUrl))
-                {
-                    DeleteUploadedImageFromServer(dbCard.ImageUrl);
-                }
-
-                card.ImageUrl = UploadImage(card.FileInput);
-            }
-
-            _cardRepository.UpdateCard(card);
-        }
-
-        private string UploadImage(HttpPostedFileBase fileInput)
-        {
-            var imagePhysicalPath = _fileService.GetPhysicalPath(HttpContext.Current, CardImagesServerPath);
-            return Path.Combine(CardImagesServerPath, _fileService.UploadToServerPath(imagePhysicalPath, fileInput));
         }
 
         private Card ConverToMixedLeagueCard(Card card)
@@ -130,7 +59,12 @@ namespace FirePuckStore.BL.Services.Implementation
 
         public void Dispose()
         {
-            _cardRepository.Dispose();
+            Repository.Dispose();
+        }
+
+        protected override int GetEntityId(Card entity)
+        {
+            return entity.CardId;
         }
     }
 }
