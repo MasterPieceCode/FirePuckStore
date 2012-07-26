@@ -10,14 +10,24 @@ namespace FirePuckStore.BL.Services.Implementation
 {
     public class CartService : ICartService
     {
+        #region Fields
+
         private readonly ICardService _cardService;
         private readonly ICartRepository _cartRepository;
+
+        #endregion
+
+        #region Constructor
 
         public CartService(ICartRepository cartRepository, ICardService cardService)
         {
             _cartRepository = cartRepository;
             _cardService = cardService;
         }
+
+        #endregion
+
+        #region ICartService Implementation
 
         public List<Order> GetCart()
         {
@@ -99,5 +109,7 @@ namespace FirePuckStore.BL.Services.Implementation
         {
             _cartRepository.Dispose();
         }
+
+        #endregion
     }
 }

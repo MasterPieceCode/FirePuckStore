@@ -46,7 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Card.cs" />
-    <Compile Include="Cart.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="IFileUploadable.cs" />
     <Compile Include="League.cs" />

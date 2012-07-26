@@ -24,5 +24,10 @@ namespace FirePuckStore.Controllers
         {
             return View(_cardService.GetOrderedByLeagueWithMixedCards());
         }
+
+        public ActionResult About()
+        {
+            return View();
+        }
     }
 }

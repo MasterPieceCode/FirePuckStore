@@ -1,12 +1,12 @@
 ﻿@model FirePuckStore.Models.Card
 @{
-    ViewBag.Title = "Create Card";
+    ViewBag.Title = "Add Card";
 }
 <header>
     <p class="inlineDisplay">Here you can fill required fields. To upload image click on image area and choose a required image file</p>
 </header>
 
-@using (Html.BeginForm("Create", "Player", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "Card", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary(true)
 

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width" />
     <meta name="author" content="Eric Gasanov"/>
     <meta name="description" content="Hockey Players Cards Store"/>
-    <link rel="shortcut icon" href="/Content/images/puck.ico"/>
+    <link rel="shortcut icon" href="/Content/images/puck.png"/>
     <link href='http://fonts.googleapis.com/css?family=Cagliostro' rel='stylesheet' type='text/css'>   
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/themes/darkness/css", "~/Content/css")
@@ -22,7 +22,7 @@
     <body>
    <header>        
        <nav>
-           <a id = "homeImg" href="Index"> </a>
+           <span id = "homeImg"> </span>
            <h1>Fire Puck Cards</h1>
            <ul id="navList">
                <li>
@@ -35,7 +35,7 @@
                    @Html.ActionLink("Players", "Index", "Player")
                </li>
                <li>
-                   <a href='About'>About</a>
+                   @Html.ActionLink("About", "About", "Home")
                </li>
            </ul>
        </nav>
@@ -45,6 +45,7 @@
         @Scripts.Render("~/bundles/jqueryui")
         <script type="text/javascript">
             $(function () {
+                
                 var pathname = window.location.pathname;
                 var anchor;
                 if (pathname == '/') {
@@ -54,16 +55,6 @@
                 }
 
                 anchor.addClass('selectedMenuItem');
-                /*
-                
-                $('#navList').find('a').each(function () {
-                var anchor = $(this.target);
-                    
-                if (anchor.text().contains(pathname)) {
-                anchor.;                        
-                }
-                });
-                */
             })
         </script>
      

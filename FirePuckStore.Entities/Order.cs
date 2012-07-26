@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FirePuckStore.Models
 {
@@ -13,6 +14,7 @@ namespace FirePuckStore.Models
         public int Quantity { get; set; }
 
         [NotMapped]
+        [DataType(DataType.Currency)]
         public decimal Price { get; set; }
     }
 }

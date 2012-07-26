@@ -5,15 +5,8 @@ using FirePuckStore.Models;
 
 namespace FirePuckStore.BL.Services.Interfaces
 {
-    public interface ICardService : IGenericService<Card>, IDisposable
+    public interface ICardService : IGenericService<Card>
     {
         IDictionary<string, List<Card>> GetOrderedByLeagueWithMixedCards();
-        /*List<Card> GetAll();*/
-/*
-        void Delete(int cardId);
-        Card GetById(int cardId);
-        void Add(Card card);
-        void Update(Card card);
-*/
     }
 }

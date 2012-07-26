@@ -10,18 +10,32 @@ using FirePuckStore.Models;
 
 namespace FirePuckStore.BL.Services.Implementation
 {
-    public abstract class GenericService<T> : IGenericService<T> where T : class 
+    public abstract class GenericService<T> : IGenericService<T> where T : class
     {
+        #region Properties
+
         protected IGenericRepository<T> Repository { get; private set; }
         protected IFileService FileService { get; private set; }
 
-        protected abstract int GetEntityId(T entity);
+        #endregion
+
+        #region Constructor
 
         protected GenericService(IGenericRepository<T> repository, IFileService fileService)
         {
             Repository = repository;
             FileService = fileService;
         }
+
+        #endregion
+
+        #region Abstract Members
+
+        protected abstract int GetEntityId(T entity);
+
+        #endregion
+
+        #region IGenericService Implementation
 
         public virtual List<T> GetAll()
         {
@@ -48,12 +62,6 @@ namespace FirePuckStore.BL.Services.Implementation
                 fileUploadable.ImageUrl = UploadImage(fileUploadable.FileInput);
             }
             Repository.Add(entity);
-        }
-
-        private string UploadImage(HttpPostedFileBase fileInput)
-        {
-            var imagePhysicalPath = FileService.GetPhysicalPath(HttpContext.Current, Constants.CardImagesServerPath);
-            return Path.Combine(Constants.CardImagesServerPath, FileService.UploadToServerPath(imagePhysicalPath, fileInput));
         }
 
         public void Update(T entity)
@@ -89,16 +97,6 @@ namespace FirePuckStore.BL.Services.Implementation
             Repository.Update(entity);
         }
 
-        private void DeleteUploadedImageFromServer(string imageUrl)
-        {
-            if (imageUrl.Equals(Constants.DefaultmageServerPath, StringComparison.OrdinalIgnoreCase))
-            {
-                return;
-            }
-
-            FileService.DeleteFileFromServer(FileService.GetPhysicalPath(HttpContext.Current, imageUrl));
-        }
-
         public void Delete(int entityId)
         {
             var entity = GetById(entityId);
@@ -117,5 +115,27 @@ namespace FirePuckStore.BL.Services.Implementation
         {
             Repository.Dispose();
         }
+
+        #endregion
+
+        #region Helper Methods
+
+        private string UploadImage(HttpPostedFileBase fileInput)
+        {
+            var imagePhysicalPath = FileService.GetPhysicalPath(HttpContext.Current, Constants.CardImagesServerPath);
+            return Path.Combine(Constants.CardImagesServerPath, FileService.UploadToServerPath(imagePhysicalPath, fileInput));
+        }
+
+        private void DeleteUploadedImageFromServer(string imageUrl)
+        {
+            if (imageUrl.Equals(Constants.DefaultmageServerPath, StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
+            FileService.DeleteFileFromServer(FileService.GetPhysicalPath(HttpContext.Current, imageUrl));
+        }
+
+        #endregion
     }
 }

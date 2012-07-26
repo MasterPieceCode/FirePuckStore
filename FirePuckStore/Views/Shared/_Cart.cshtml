@@ -8,11 +8,11 @@
 <aside id="shoppingCart">
 <p style="display: inline-block; float: right; padding-right: 15px;">Total: <span>@Model.Sum(o => o.Price)</span> </p>    
     <div id="cartBlock">
-        <p id = "cartQuantity"  class = @ClassName() >@Model.Count</p>
-        <img id="cartIco" class = @ClassName() src="/Content/Images/Cart.png"/>
+        <p id = "cartQuantity"  class = @ClassName()>@Model.Sum(o => o.Quantity)</p>
+        <img id="cartIco" title="Total cards" class = @ClassName() src="/Content/Images/Cart.png"/>
         <br/>
     </div>
-    @foreach(var order in Model)
+    @foreach (var order in Model)
     {
         <div class="cartItem">
             <img class = "cartImg" title="Click to delete one item" alt="@order.Card.Description" ordercardid = "@order.Card.CardId" draggable="false"  src="@order.Card.ImageUrl"/>

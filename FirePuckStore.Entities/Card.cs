@@ -5,7 +5,7 @@ using System.Web;
 
 namespace FirePuckStore.Models
 {
-    public class Card : ICloneable, IFileUploadable
+    public class Card : IFileUploadable
     {
         public int CardId { get; set; }
 
@@ -37,17 +37,6 @@ namespace FirePuckStore.Models
         public Card()
         {
             ImageUrl = Constants.DefaultmageServerPath;
-        }
-
-        public Card Clone()
-        {
-            var cloneable = (ICloneable)this;
-            return (Card)cloneable.Clone();
-        }
-
-        object ICloneable.Clone()
-        {
-            return MemberwiseClone();
         }
     }
 }
