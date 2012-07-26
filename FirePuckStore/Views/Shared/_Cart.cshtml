@@ -6,11 +6,12 @@
 }
 
 <aside id="shoppingCart">
+<p style="display: inline-block; float: right; padding-right: 15px;">Total: <span>@Model.Sum(o => o.Price)</span> </p>    
     <div id="cartBlock">
         <p id = "cartQuantity"  class = @ClassName() >@Model.Count</p>
         <img id="cartIco" class = @ClassName() src="/Content/Images/Cart.png"/>
         <br/>
-    </div>    
+    </div>
     @foreach(var order in Model)
     {
         <div class="cartItem">

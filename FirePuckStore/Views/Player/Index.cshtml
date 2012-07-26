@@ -25,8 +25,8 @@
                     @Html.DisplayNameFor(model => model.League.Name)
                 </p>
                 <p>
-                    <a href="@item.League.WebSite">
-                        <img src="@item.League.LogoPath" style="height:  48px; display: inline-block; top: 10px; position: relative">                    
+                    <a href="@item.League.WebSite" target="_blank">
+                        <img src="@item.League.LogoPath" class="leagueLogo">                    
                     </a>
                     @Html.DisplayFor(modelItem => item.League.Name)
                 </p>

@@ -21,28 +21,52 @@
 </head>
     <body>
    <header>        
-        <nav>
-            <a id = "homeImg" href="Index"> </a>
-            <h1>Fire Puck Cards</h1>
-            <ul id="navList">
-                <li>
-                    @Html.ActionLink("Store", "Index", "Home")
-                </li>
-                <li>
-                    @Html.ActionLink("Cards", "Index", "Card")
-                </li>
-                <li>
-                    @Html.ActionLink("Players", "Index", "Player")
-                </li>
-                <li>
-                    <a href='About'>About</a>
-                </li>
-            </ul>
-        </nav>
+       <nav>
+           <a id = "homeImg" href="Index"> </a>
+           <h1>Fire Puck Cards</h1>
+           <ul id="navList">
+               <li>
+                   @Html.ActionLink("Store", "Index", "Home")
+               </li>
+               <li>
+                   @Html.ActionLink("Cards", "Index", "Card")
+               </li>
+               <li>
+                   @Html.ActionLink("Players", "Index", "Player")
+               </li>
+               <li>
+                   <a href='About'>About</a>
+               </li>
+           </ul>
+       </nav>
     </header>
         @RenderBody()
         @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/jqueryui")        
+        @Scripts.Render("~/bundles/jqueryui")
+        <script type="text/javascript">
+            $(function () {
+                var pathname = window.location.pathname;
+                var anchor;
+                if (pathname == '/') {
+                    anchor = $('#navList').find('a').first();
+                } else {
+                    anchor = $('#navList').find('a[href*="' + pathname + '"]');
+                }
+
+                anchor.addClass('selectedMenuItem');
+                /*
+                
+                $('#navList').find('a').each(function () {
+                var anchor = $(this.target);
+                    
+                if (anchor.text().contains(pathname)) {
+                anchor.;                        
+                }
+                });
+                */
+            })
+        </script>
+     
         @RenderSection("Scripts", required: false)
     </body>
 </html>

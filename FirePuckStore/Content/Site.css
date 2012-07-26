@@ -136,6 +136,15 @@ input[class~="text-box"], select, .editor-input {
             -moz-transition: 200ms linear 100ms;
             -o-transition: 200ms linear 100ms;
         }
+        
+        .selectedMenuItem 
+        {
+            border-radius: 5px;            
+            background-color: rgb(73, 56, 62);
+            box-shadow: 5px 5px 5px #888;
+            opacity: 1;
+        }
+        
         #homeImg
         {
             margin: 0px;
@@ -302,6 +311,7 @@ input[class~="text-box"], select, .editor-input {
         div.table p {
             display: table-cell;
             padding-left: 10px;
+
         }
 
         .cardImg {
@@ -341,6 +351,10 @@ input[class~="text-box"], select, .editor-input {
 
     .noItemsInStore:hover  {
         opacity: 0.3;
+    }
+    
+    .leagueLogo {
+        height:  48px; display: inline-block; top: 10px; position: relative;
     }
     
     header {

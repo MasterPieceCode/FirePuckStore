@@ -21,12 +21,7 @@
             @foreach (var card in category.Value)
             {
                 <div class="cartItem">
-                    <img cardid = "@card.CardId" src= @card.ImageUrl alt="@card.Description" @(card.Quantity > 0 ? "draggable=true" : "draggable=false class = noItemsInStore") />
-@*
-                    <div class = "cardDescription" style="display: none">
-                        <p>@card.Description</p>
-                    </div>
-*@
+                    <img cardid = "@card.CardId" src= @card.ImageUrl title="@card.Description" alt="@card.Description" @(card.Quantity > 0 ? "draggable=true" : "draggable=false class = noItemsInStore") />
                         @{
 
                             if (card.Quantity > 0)
