@@ -15,7 +15,7 @@
     @foreach(var order in Model)
     {
         <div class="cartItem">
-            <img class = "cartImg" title="@order.Card.Description" alt="@order.Card.Description" ordercardid = "@order.Card.CardId" draggable="false"  src="@order.Card.ImageUrl"/>
+            <img class = "cartImg" title="Click to delete one item" alt="@order.Card.Description" ordercardid = "@order.Card.CardId" draggable="false"  src="@order.Card.ImageUrl"/>
             <br/>
             <h6>Qnty:</h6><span class="pricequantity"> @order.Quantity</span>
             <br/>
